@@ -12,8 +12,19 @@ import java.util.ArrayList;
 public class HangmanChallengeActivity extends Activity {
     public static HangmanChallengeActivity static_instance = null;
 
-    String[] numbers = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
-    ArrayList<String> QuestionForSliderMenu = new ArrayList<String>();
+    String[][] challenges_icons = {
+            {"Word 1", ""},
+            {"Word 2", ""},
+            {"Word 3", ""},
+            {"Word 4", ""},
+            {"Word U", ""},
+            {"Word V", ""},
+            {"Word W", ""},
+            {"Word X", ""},
+            {"Word Y", ""},
+            {"Word Z", ""}
+    };
+    ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,11 +34,11 @@ public class HangmanChallengeActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.hangman_category_select);
 
-        for (String s : numbers) {
-            QuestionForSliderMenu.add(s);
+        for (String s[] : challenges_icons) {
+            sliderMenu.add(new ListAdapter.ListElement(s[0], s[1]));
         }
 
-        ListAdapter mAdapter = new ListAdapter(this, QuestionForSliderMenu);
+        ListAdapter mAdapter = new ListAdapter(this, sliderMenu);
         listView.setAdapter(mAdapter);
     }
 }

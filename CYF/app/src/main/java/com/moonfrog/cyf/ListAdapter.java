@@ -14,18 +14,22 @@ import java.util.ArrayList;
  * Created by srinath on 30/03/15.
  */
 public class ListAdapter extends BaseAdapter {
+    public static class ListElement {
+        String name;
+        String icon;
+        public ListElement(String name, String icon) {
+            this.name = name;
+            this.icon = icon;
+        }
+    };
 
-    private ArrayList<String> mainList;
-    ArrayList<String> QuestionForSliderMenu = new ArrayList<String>();
+    private Context parentContext;
+    private ArrayList<ListElement> mainList;
 
-    public ListAdapter(Context applicationContext, ArrayList<String> questionForSliderMenu) {
+    public ListAdapter(Context applicationContext, ArrayList<ListElement> questionForSliderMenu) {
         super();
         this.mainList = questionForSliderMenu;
-    }
-
-    public ListAdapter() {
-        super();
-        this.mainList = QuestionForSliderMenu;
+        this.parentContext = applicationContext;
     }
 
     @Override
@@ -47,7 +51,8 @@ public class ListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) main.static_instance.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            LayoutInflater inflater = (LayoutInflater) parentContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_row_stack, null);
         }
 
@@ -55,7 +60,12 @@ public class ListAdapter extends BaseAdapter {
         ImageView imageIcon = (ImageView) convertView.findViewById(R.id.row_imageView1);
 
         try {
-            tv1.setText(" List Item "+ " : " + position);
+            tv1.setText(((ListElement)getItem(position)).name);
+            if(!((ListElement)getItem(position)).icon.equals("")) {
+                imageIcon.setImageResource(parentContext.getResources().getIdentifier(((ListElement)getItem(position)).icon, "drawable",  parentContext.getPackageName()));
+            }
+            //tv1.setText(" List Item "+ " : " + position);
+            //imageIcon.setImage
         } catch (Exception e) {
             e.printStackTrace();
         }
