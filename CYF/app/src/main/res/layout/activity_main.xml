@@ -46,9 +46,10 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:shadowColor="#ff3e36ff" />
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="#ff3e36ff"
+                android:onClick="onHangmanClick" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -59,8 +60,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -72,8 +73,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -85,8 +86,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -98,8 +99,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -111,8 +112,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -124,8 +125,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -137,8 +138,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -150,8 +151,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -163,8 +164,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -176,8 +177,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
             <Button
@@ -189,8 +190,8 @@
                 android:textStyle="normal"
                 android:clickable="true"
                 android:enabled="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:shadowColor="#ff3e36ff" />
 
         </LinearLayout>

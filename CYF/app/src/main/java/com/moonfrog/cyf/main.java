@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,6 +42,10 @@ public class main extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onHangmanClick(View v) {
+        setContentView(R.layout.hangman_challenge);
     }
 
     @Override
