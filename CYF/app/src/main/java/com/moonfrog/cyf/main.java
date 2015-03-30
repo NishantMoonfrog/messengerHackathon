@@ -5,22 +5,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import java.util.ArrayList;
+
 public class main extends Activity {
+
+    public static main static_instance = null;
+
+    String[] numbers = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
+    ArrayList<String> QuestionForSliderMenu = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        static_instance = this;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +49,14 @@ public class main extends Activity {
 
     public void onHangmanClick(View v) {
         setContentView(R.layout.hangman_challenge);
+        ListView listView = (ListView) findViewById(R.id.hangman_category_select);
+
+        for (String s : numbers) {
+            QuestionForSliderMenu.add(s);
+        }
+
+        ListAdapter mAdapter = new ListAdapter(this, QuestionForSliderMenu);
+        listView.setAdapter(mAdapter);
     }
 
     @Override
@@ -64,3 +75,4 @@ public class main extends Activity {
         AppEventsLogger.deactivateApp(this);
     }
 }
+
