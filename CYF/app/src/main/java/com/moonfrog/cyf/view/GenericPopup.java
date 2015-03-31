@@ -54,8 +54,8 @@ public class GenericPopup extends Dialog {
 
     private void initialize() {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.setContentView(R.layout.generic_popup);
         //this.setTitle("You lost!");
+        this.setContentView(R.layout.generic_popup);
 
         TextView text = (TextView)findViewById(R.id.txtView);
         text.setText(mainText);

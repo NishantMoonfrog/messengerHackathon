@@ -107,10 +107,7 @@ public class HangmanSolveActivity extends Activity {
         switch(num_wrong_choices) {
             case -1:
                 // Win condition
-
-                final GenericPopup winPopup = new GenericPopup(this, "You Won!! Share now :)", true);
-                winPopup.setContentView(R.layout.generic_popup);
-                winPopup.show();
+                GenericPopup winPopup = new GenericPopup(this, "You Won!! Share now :)", true);
                 winPopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                     @Override
                     public void OnClose(GenericPopup popup) {
@@ -121,6 +118,7 @@ public class HangmanSolveActivity extends Activity {
                         startActivity(intent);
                     }
                 });
+                winPopup.show();
                 break;
             case 0:
                 iv.setImageResource(R.drawable.hangman_0);
@@ -150,10 +148,7 @@ public class HangmanSolveActivity extends Activity {
             default:
                 // Game over
                 iv.setImageResource(R.drawable.hangman_8);
-
-                final GenericPopup losePopup = new GenericPopup(this, "You lost! Now get Lost!!", false, "Okay");
-                losePopup.setContentView(R.layout.generic_popup);
-                losePopup.show();
+                GenericPopup losePopup = new GenericPopup(this, "You lost! Now get Lost!!", false, "Okay");
                 losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                     @Override
                     public void OnClose(GenericPopup popup) {
@@ -161,6 +156,7 @@ public class HangmanSolveActivity extends Activity {
                         startActivity(intent);
                     }
                 });
+                losePopup.show();
                 break;
         }
 
