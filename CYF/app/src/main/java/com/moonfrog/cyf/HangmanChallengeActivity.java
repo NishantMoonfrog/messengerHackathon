@@ -90,56 +90,12 @@ public class HangmanChallengeActivity extends FragmentActivity {
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
-
-        ListAdapter mAdapter = new ListAdapter(this, sliderMenu);
-        listView.setAdapter(mAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                static_instance.selectedWord = static_instance.challenges_icons[position][0];
-
-                if( Globals.name == "" ) {
-                    ArrayList<String> permissions = new ArrayList<String>();
-                    permissions.add("public_profile");
-                    LoginManager.getInstance().logInWithReadPermissions(static_instance, permissions);
-                } else {
-                    static_instance.challengeFriends();
-                }
-            }
-        });
-
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            doSearch(query);
-        }
     }
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        // Configure the search info and add any event listeners
-
-        return super.onCreateOptionsMenu(menu);
-    }*/
-
-    public void doSearch(String query) {
-        int q = 3;
-        q *= 4;
-        query += "" + q;
-        Log.e("Rads", query);
-        int b = q;
     }
 
     public void challengeFriends() {
@@ -154,6 +110,7 @@ public class HangmanChallengeActivity extends FragmentActivity {
         v.post(new Runnable() {
             @Override
             public void run() {
+                v.findViewById(1);
                 Bitmap image = Globals.getBitmapFromView(v);
                 String path = MediaStore.Images.Media.insertImage(static_instance.getContentResolver(), image, "Title", null);
                 Uri contentUri = Uri.parse(path);

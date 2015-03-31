@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.view.SlidingTabLayout;
@@ -119,7 +120,8 @@ public class HangmanChallengeFragment extends Fragment {
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             // Inflate a new layout from our resources
-            View view = getActivity().getLayoutInflater().inflate(R.layout.hangman_challenge_pager_item, container, false);
+            final HangmanChallengeActivity currentActivity = (HangmanChallengeActivity) getActivity();
+            View view = currentActivity.getLayoutInflater().inflate(R.layout.hangman_challenge_pager_item, container, false);
             container.addView(view);
 
             ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
@@ -133,31 +135,19 @@ public class HangmanChallengeFragment extends Fragment {
             ListAdapter mAdapter = new ListAdapter(view.getContext(), sliderMenu);
             listView.setAdapter(mAdapter);
 
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int inner_position, long id) {
-                    String shaHash = AESEncryption.encrypt(category_word_list[position][inner_position]);
-                    Log.e("encrypted key ", shaHash);
+                    currentActivity.selectedWord = category_word_list[position][inner_position];
 
-                    Uri contentUri = Uri.fromFile(new File("/sdcard/Downloads/img.jpg"));
-
-                    String metadata = "";
-                    try {
-                        JSONObject metadataJson = new JSONObject();
-                        metadataJson.put("word", shaHash);
-                        metadata = metadataJson.toString();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if( Globals.name == "" ) {
+                        ArrayList<String> permissions = new ArrayList<String>();
+                        permissions.add("public_profile");
+                        LoginManager.getInstance().logInWithReadPermissions(currentActivity, permissions);
+                    } else {
+                        currentActivity.challengeFriends();
                     }
-
-
-                    ShareToMessengerParams shareToMessengerParams =
-                            ShareToMessengerParams.newBuilder(contentUri, "image/*")
-                                    .setMetaData(metadata)
-                                    .build();
-
-                    // Sharing from an Activity
-                    MessengerUtils.shareToMessenger(getActivity(), 10, shareToMessengerParams);
                 }
             });
 

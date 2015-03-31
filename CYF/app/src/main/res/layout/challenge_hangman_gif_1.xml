@@ -6,34 +6,52 @@
     android:background="@drawable/bg1"
     android:weightSum="1"
     style="@style/com_facebook_loginview_silver_style"
-    android:gravity="center_vertical|center_horizontal|left">
+    android:gravity="center_vertical|center_horizontal"
+    android:measureWithLargestChild="false">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/hangman_6" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:layout_gravity="top"
+        android:gravity="top">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nishant Varshney"
-        android:id="@+id/name"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#ff060606"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/hangman_6" />
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="challenged you."
-        android:id="@+id/challengeText"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ff0d0d0d"
-        android:textSize="30dp" />
+        android:layout_gravity="bottom"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nishant Varshney"
+            android:id="@+id/name"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ff060606"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="challenged you."
+            android:id="@+id/challengeText"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ff0d0d0d"
+            android:textSize="30dp" />
+    </LinearLayout>
 
 
 </LinearLayout>
