@@ -85,9 +85,16 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="jsslutils-extra-apachetomcat6-1.0.7" level="project" />
+    <orderEntry type="library" exported="" name="coyote-6.0.26" level="project" />
+    <orderEntry type="library" exported="" name="servlet-api-6.0.26" level="project" />
+    <orderEntry type="library" exported="" name="catalina-6.0.26" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="commons-skin-4" level="project" />
+    <orderEntry type="library" exported="" name="annotations-api-6.0.26" level="project" />
+    <orderEntry type="library" exported="" name="jsslutils-1.0.7" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
+    <orderEntry type="library" exported="" name="commons-skin-4" level="project" />
+    <orderEntry type="library" exported="" name="juli-6.0.26" level="project" />
     <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>
