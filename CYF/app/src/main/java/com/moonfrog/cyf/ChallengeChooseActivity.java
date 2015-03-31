@@ -17,16 +17,11 @@ public class ChallengeChooseActivity extends Activity {
     public static ChallengeChooseActivity static_instance = null;
 
     String[][] modes_icons = {
-        {"Hangman", "icon"},
-        {"Cows & Bulls", "icon"},
-        {"Trivia", "icon"},
-        {"Spot Me!", "icon"},
-        {"Mode U", ""},
-        {"Mode V", ""},
-        {"Mode W", ""},
-        {"Mode X", ""},
-        {"Mode Y", ""},
-        {"Mode Z", ""}
+        {"Hangman", "hangman"},
+        {"Cows & Bulls", "cowsandbulls"},
+        {"Trivia", "trivia"},
+        {"Spot Me!", "spotme"},
+        {"Coming Soon!", ""}
     };
     ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
 

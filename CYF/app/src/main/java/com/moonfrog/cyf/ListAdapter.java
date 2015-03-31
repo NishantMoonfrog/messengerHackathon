@@ -50,27 +50,25 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         if (convertView == null) {
-
             LayoutInflater inflater = (LayoutInflater) parentContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_row_stack, null);
-        }
 
-        TextView tv1 = (TextView) convertView.findViewById(R.id.row_textView1);
-        ImageView imageIcon = (ImageView) convertView.findViewById(R.id.row_imageView1);
+            TextView tv1 = (TextView) convertView.findViewById(R.id.row_textView1);
+            ImageView imageIcon = (ImageView) convertView.findViewById(R.id.row_imageView1);
 
-        try {
-            tv1.setText(((ListElement)getItem(position)).name);
-            if(!((ListElement)getItem(position)).icon.equals("")) {
-                imageIcon.setImageResource(parentContext.getResources().getIdentifier(((ListElement)getItem(position)).icon, "drawable",  parentContext.getPackageName()));
-            } else {
-                ((ViewManager)imageIcon.getParent()).removeView(imageIcon);
+            try {
+                tv1.setText(((ListElement)getItem(position)).name);
+                if(!((ListElement)getItem(position)).icon.equals("")) {
+                    imageIcon.setImageResource(parentContext.getResources().getIdentifier(((ListElement)getItem(position)).icon, "drawable",  parentContext.getPackageName()));
+                } else {
+                    imageIcon.setVisibility(View.GONE);
+                    //((ViewManager)imageIcon.getParent()).removeView(imageIcon);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
         return convertView;
     }
 }
