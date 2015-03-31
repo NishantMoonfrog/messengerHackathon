@@ -3,13 +3,17 @@ package com.moonfrog.cyf;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
@@ -37,6 +42,7 @@ public class HangmanSolveActivity extends Activity {
     private String current_status = "";
     private String final_word = "";
     private String tried_characters = "";
+    private String challengerName = "";
     private int num_wrong_choices = 0;
     private boolean completed = false;
 
@@ -57,6 +63,7 @@ public class HangmanSolveActivity extends Activity {
             try {
                 JSONObject jsonObj = new JSONObject(metadata);
                 word = jsonObj.get("word").toString();
+                challengerName = jsonObj.get("name").toString();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -115,17 +122,95 @@ public class HangmanSolveActivity extends Activity {
                 @Override
                 public void OnClose(GenericPopup popup) {
                     // NISHANT: Add share Code here...
-                    ShareToMessengerParams shareToMessengerParams =
-                            ShareToMessengerParams.newBuilder(Uri.fromFile(new File("/sdcard/Downloads/img.jpg")), "image/jpeg")
-                                    .build();
+                    LayoutInflater layoutInflater = (LayoutInflater) static_instance.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View v = layoutInflater.inflate(R.layout.win_hangman, null);
 
-                    if( mPicking ) {
-                        MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
+                    ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
+
+                    int id = R.drawable.hangman_0;
+                    switch(num_wrong_choices) {
+                        case 1:
+                            id = R.drawable.hangman_1;
+                            break;
+                        case 2:
+                            id = R.drawable.hangman_2;
+                            break;
+                        case 3:
+                            id = R.drawable.hangman_3;
+                            break;
+                        case 4:
+                            id = R.drawable.hangman_4;
+                            break;
+                        case 5:
+                            id = R.drawable.hangman_5;
+                            break;
+                        case 6:
+                            id = R.drawable.hangman_6;
+                            break;
+                        case 7:
+                            id = R.drawable.hangman_7;
+                            break;
                     }
 
+
+                    imageView.setImageDrawable(getResources().getDrawable(id));
+
+                    TextView tv = new TextView(static_instance);
+                    String text = "I cracked " + challengerName + "'s challenge in " + num_wrong_choices + " moves!";
+                    tv.setPadding(0, 10, 0, 0);
+                    tv.setText(text);
+                    tv.setTextSize(40);
+                    tv.setGravity(Gravity.CENTER);
+
+                    LinearLayout ll = (LinearLayout) v.findViewById(R.id.win_view);
+                    ll.addView(tv);
+
+                    final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
+                    current.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+
+                    v.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Bitmap image = Globals.getBitmapFromView(v);
+                            current.removeView(v);
+
+                            String pngPath = "/sdcard/cyfTemp/" + "win_hangman.png";
+                            try{
+                                FileOutputStream outStream = new FileOutputStream(pngPath);
+                                image.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                                outStream.flush();
+                                outStream.close();
+                            } catch(Exception e){
+                                e.printStackTrace();
+                            }
+
+
+                            Uri.Builder b = new Uri.Builder();
+                            b.scheme("file").appendPath(pngPath);
+                            Uri contentUri = b.build();
+                            String metadata = "";
+                            try {
+                                JSONObject metadataJson = new JSONObject();
+                                metadataJson.put("word", Globals.encrypt(final_word));
+                                metadataJson.put("name", challengerName);
+                                metadata = metadataJson.toString();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            ShareToMessengerParams shareToMessengerParams =
+                                    ShareToMessengerParams.newBuilder(contentUri, "image/png")
+                                            .setMetaData(metadata)
+                                            .build();
+
+                            if( mPicking ) {
+                                MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
+                            }
+                        }
+                    });
+
                     // On completion do this:
-                    Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
-                    startActivity(intent);
+                    // Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+                    // startActivity(intent);
                 }
             });
             winPopup.show();

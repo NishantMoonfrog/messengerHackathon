@@ -194,6 +194,7 @@ public class HangmanChallengeActivity extends FragmentActivity {
                         try {
                             JSONObject metadataJson = new JSONObject();
                             metadataJson.put("word", shaHash);
+                            metadataJson.put("name", Globals.name);
                             metadata = metadataJson.toString();
                         } catch (Exception e) {
                             e.printStackTrace();
