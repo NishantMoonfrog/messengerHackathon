@@ -35,6 +35,7 @@ public class HangmanSolveActivity extends Activity {
     private String final_word = "";
     private String tried_characters = "";
     private int num_wrong_choices = 0;
+    private boolean completed = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class HangmanSolveActivity extends Activity {
             if(!final_word.contains(button_text)) {
                 num_wrong_choices++;
             } else if(current_status.equals(final_word)) {
-                num_wrong_choices = -1;
+                completed = true;
             }
         }
         updateStatus();
@@ -104,60 +105,63 @@ public class HangmanSolveActivity extends Activity {
 
         ImageView iv = (ImageView) findViewById(R.id.hangman_image);
 
-        switch(num_wrong_choices) {
-            case -1:
-                // Win condition
-                GenericPopup winPopup = new GenericPopup(this, "You Won!! Share now :)", true);
-                winPopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
-                    @Override
-                    public void OnClose(GenericPopup popup) {
-                        // Add share Code here...
+        if(completed) {
+            // Win condition
+            GenericPopup winPopup = new GenericPopup(this, "You completed the challenge in " + num_wrong_choices + " turns!", true);
+            winPopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
+                @Override
+                public void OnClose(GenericPopup popup) {
+                    // NISHANT: Add share Code here...
 
-                        // On completion do this:
-                        Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                winPopup.show();
-                break;
-            case 0:
-                iv.setImageResource(R.drawable.hangman_0);
-                break;
-            case 1:
-                iv.setImageResource(R.drawable.hangman_1);
-                break;
-            case 2:
-                iv.setImageResource(R.drawable.hangman_2);
-                break;
-            case 3:
-                iv.setImageResource(R.drawable.hangman_3);
-                break;
-            case 4:
-                iv.setImageResource(R.drawable.hangman_4);
-                break;
-            case 5:
-                iv.setImageResource(R.drawable.hangman_5);
-                break;
-            case 6:
-                iv.setImageResource(R.drawable.hangman_6);
-                break;
-            case 7:
-                iv.setImageResource(R.drawable.hangman_7);
-                break;
-            case 8:
-            default:
-                // Game over
-                iv.setImageResource(R.drawable.hangman_8);
-                GenericPopup losePopup = new GenericPopup(this, "You lost! Now get Lost!!", false, "Okay");
-                losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
-                    @Override
-                    public void OnClose(GenericPopup popup) {
-                        Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                losePopup.show();
-                break;
+                    // On completion do this:
+                    Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+                    startActivity(intent);
+                }
+            });
+            winPopup.show();
+        } else {
+            switch(num_wrong_choices) {
+                case 0:
+                    iv.setImageResource(R.drawable.hangman_0);
+                    break;
+                case 1:
+                    iv.setImageResource(R.drawable.hangman_1);
+                    break;
+                case 2:
+                    iv.setImageResource(R.drawable.hangman_2);
+                    break;
+                case 3:
+                    iv.setImageResource(R.drawable.hangman_3);
+                    break;
+                case 4:
+                    iv.setImageResource(R.drawable.hangman_4);
+                    break;
+                case 5:
+                    iv.setImageResource(R.drawable.hangman_5);
+                    break;
+                case 6:
+                    iv.setImageResource(R.drawable.hangman_6);
+                    break;
+                case 7:
+                    iv.setImageResource(R.drawable.hangman_7);
+                    break;
+                case 8:
+                default:
+                    // Game over
+                    iv.setImageResource(R.drawable.hangman_8);
+                    GenericPopup losePopup = new GenericPopup(this, "You lost.. :-(\nPost a new Challenge", false, "GO");
+                    losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
+                        @Override
+                        public void OnClose(GenericPopup popup) {
+                            // NISHANT: Add share Code here...
+
+                            Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    losePopup.show();
+                    break;
+            }
         }
 
         ll.addView(tv);
