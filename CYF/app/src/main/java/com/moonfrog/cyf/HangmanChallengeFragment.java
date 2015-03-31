@@ -44,6 +44,16 @@ public class HangmanChallengeFragment extends Fragment {
             "Sports",
             "Games"
     };
+
+    public String[] topics = {
+        "Country",
+        "Animal",
+        "City",
+        "Movie",
+        "Sports",
+        "Game"
+    };
+
     public String[][] category_word_list = {
             {},
             {},
@@ -140,6 +150,7 @@ public class HangmanChallengeFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int inner_position, long id) {
                     currentActivity.selectedWord = category_word_list[position][inner_position];
+                    currentActivity.selectedTopic = topics[position];
 
                     if( Globals.name == "" ) {
                         ArrayList<String> permissions = new ArrayList<String>();

@@ -29,6 +29,8 @@ public class ChallengeChooseActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_choose);
+        // setContentView(R.layout.challenge_hangman_gif_1);
+        
         static_instance = this;
 
 

@@ -14,9 +14,13 @@ import android.widget.LinearLayout;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.Key;
+import java.util.ArrayList;
+import com.moonfrog.cyf.AnimatedGifEncoder;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -45,7 +49,7 @@ public class Globals {
             Cipher cipher = Cipher.getInstance("AES");
 
             cipher.init(Cipher.DECRYPT_MODE, aesKey);
-            byte[] decrypted = cipher.doFinal( Base64.decode(hash.getBytes(), Base64.DEFAULT) );
+            byte[] decrypted = cipher.doFinal(Base64.decode(hash.getBytes(), Base64.DEFAULT));
             return new String(decrypted);
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,10 +58,31 @@ public class Globals {
     }
 
     public static Bitmap getBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap( v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);                
+        Bitmap b = Bitmap.createBitmap( v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_4444);
         Canvas c = new Canvas(b);
         v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
         v.draw(c);
-        return b;
+        ByteArrayOutputStream stream = null;
+        try {
+            stream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+        encoder.setDelay(1000);
+        encoder.start(bos);
+        for (Bitmap bitmap : bitmaps) {
+            encoder.addFrame(bitmap);
+        }
+        encoder.finish();
+        return bos.toByteArray();
     }
 }
