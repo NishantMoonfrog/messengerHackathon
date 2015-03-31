@@ -1,6 +1,7 @@
 package com.moonfrog.cyf;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -125,12 +126,33 @@ public class HangmanSolveActivity extends Activity {
                 iv.setImageResource(R.drawable.hangman_7);
                 break;
             case 8:
-                // Game over
-                iv.setImageResource(R.drawable.hangman_8);
-                break;
             default:
                 // Game over
                 iv.setImageResource(R.drawable.hangman_8);
+
+                // custom dialog
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.generic_popup);
+                dialog.setTitle("You lost!");
+
+                // set the custom dialog components - text, image and button
+                TextView text = (TextView) dialog.findViewById(R.id.txtView);
+                text.setText("You lost! Now get Lost!!");
+
+//                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+//                image.setImageResource(R.drawable.ic_launcher);
+
+                Button dialogButton = (Button) dialog.findViewById(R.id.btn_close_popup);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
                 break;
         }
 
