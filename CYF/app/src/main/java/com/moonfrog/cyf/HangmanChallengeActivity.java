@@ -1,8 +1,15 @@
 package com.moonfrog.cyf;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 
@@ -40,5 +47,30 @@ public class HangmanChallengeActivity extends Activity {
 
         ListAdapter mAdapter = new ListAdapter(this, sliderMenu);
         listView.setAdapter(mAdapter);
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            doSearch(query);
+        }
+    }
+
+/*    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        // Configure the search info and add any event listeners
+
+        return super.onCreateOptionsMenu(menu);
+    }*/
+
+    public void doSearch(String query) {
+        int q = 3;
+        q *= 4;
+        query += "" + q;
+        Log.e("Rads", query);
+        int b = q;
     }
 }

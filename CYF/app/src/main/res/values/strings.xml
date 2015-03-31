@@ -3,6 +3,8 @@
     <string name="choose_challenge">Choose Challenge</string>
     <string name="hangman_challenge">Choose Word</string>
 
+    <string name="hangman_search_hint">Type Word</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
