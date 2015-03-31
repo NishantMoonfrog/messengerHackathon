@@ -53,4 +53,5 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':facebook')
+    compile 'org.apache.commons:commons-skin:4'
 }

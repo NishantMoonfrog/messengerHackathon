@@ -8,9 +8,20 @@ import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.ShareToMessengerParams;
+import com.moonfrog.cyf.AESEncryption;
+import android.widget.AdapterView;
+
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -47,6 +58,37 @@ public class HangmanChallengeActivity extends Activity {
 
         ListAdapter mAdapter = new ListAdapter(this, sliderMenu);
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String shaHash = AESEncryption.encrypt(challenges_icons[position][0]);
+                Log.e("encrypted key ", shaHash);
+
+                Uri contentUri = Uri.fromFile(new File("/sdcard/Downloads/img.jpg"));
+
+                String metadata = "";
+                try {
+                    JSONObject metadataJson = new JSONObject();
+                    metadataJson.put("word", shaHash);
+                    metadata = metadataJson.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                ShareToMessengerParams shareToMessengerParams =
+                        ShareToMessengerParams.newBuilder(contentUri, "image/*")
+                            .setMetaData(metadata)
+                            .build();
+
+                // Sharing from an Activity
+                MessengerUtils.shareToMessenger(
+                        static_instance,
+                        10,
+                        shareToMessengerParams);
+                }
+        });
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();

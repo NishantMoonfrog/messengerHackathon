@@ -14,12 +14,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Arrays;
+import com.facebook.messenger.MessengerThreadParams;
+import com.facebook.messenger.MessengerUtils;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by srinath on 31/03/15.
  */
 public class HangmanSolveActivity extends Activity {
     public static HangmanSolveActivity static_instance = null;
+    private boolean mPicking = false;
 
     private String current_status = "";
     private String final_word = "";
@@ -32,9 +39,24 @@ public class HangmanSolveActivity extends Activity {
         setContentView(R.layout.hangman_solve);
         static_instance = this;
 
-        Bundle extras = getIntent().getExtras();
-        final_word = extras.getString("word");
-        final_word = final_word.toUpperCase();
+        Intent intent = getIntent();
+
+        String word = "";
+        if (Intent.ACTION_PICK.equals(intent.getAction())) {
+            mPicking = true;
+            MessengerThreadParams mThreadParams = MessengerUtils.getMessengerThreadParamsForIntent(intent);
+
+            String metadata = mThreadParams.metadata;
+            try {
+                JSONObject jsonObj = new JSONObject(metadata);
+                word = jsonObj.get("word").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final_word = AESEncryption.decrypt(word);
+            final_word.toUpperCase();
+            List<String> participantIds = mThreadParams.participants;
+        }
 
         if(current_status.equals("")) {
             current_status = final_word.replaceAll("[A-Z]", "_");
