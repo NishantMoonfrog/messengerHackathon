@@ -3,6 +3,7 @@ package com.moonfrog.cyf;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
+import com.moonfrog.cyf.view.GenericPopup;
 
 import org.json.JSONObject;
 
@@ -84,6 +86,8 @@ public class HangmanSolveActivity extends Activity {
 
             if(!final_word.contains(button_text)) {
                 num_wrong_choices++;
+            } else if(current_status.equals(final_word)) {
+                num_wrong_choices = -1;
             }
         }
         updateStatus();
@@ -101,6 +105,10 @@ public class HangmanSolveActivity extends Activity {
         ImageView iv = (ImageView) findViewById(R.id.hangman_image);
 
         switch(num_wrong_choices) {
+            case -1:
+                // Win condition
+
+                break;
             case 0:
                 iv.setImageResource(R.drawable.hangman_0);
                 break;
@@ -131,28 +139,18 @@ public class HangmanSolveActivity extends Activity {
                 iv.setImageResource(R.drawable.hangman_8);
 
                 // custom dialog
-                final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.generic_popup);
-                dialog.setTitle("You lost!");
+                final GenericPopup losePopup = new GenericPopup(this, "You lost! Now get Lost!!", false, "Okay");
+                losePopup.setContentView(R.layout.generic_popup);
+                //dialog.setTitle("You lost!");
+                losePopup.show();
 
-                // set the custom dialog components - text, image and button
-                TextView text = (TextView) dialog.findViewById(R.id.txtView);
-                text.setText("You lost! Now get Lost!!");
-
-//                ImageView image = (ImageView) dialog.findViewById(R.id.image);
-//                image.setImageResource(R.drawable.ic_launcher);
-
-                Button dialogButton = (Button) dialog.findViewById(R.id.btn_close_popup);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
+                losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                     @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
+                    public void OnClose(GenericPopup popup) {
+                        Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+                        startActivity(intent);
                     }
                 });
-
-                dialog.show();
-
                 break;
         }
 
