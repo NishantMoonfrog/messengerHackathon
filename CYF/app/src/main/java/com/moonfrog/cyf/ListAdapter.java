@@ -52,7 +52,8 @@ public class ListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parentContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.custom_row_stack, null);
+            convertView = inflater.inflate(R.layout.custom_row_stack, parent, false);
+            //convertView = inflater.inflate(R.layout.custom_row_stack, null);
 
             TextView tv1 = (TextView) convertView.findViewById(R.id.row_textView1);
             ImageView imageIcon = (ImageView) convertView.findViewById(R.id.row_imageView1);
