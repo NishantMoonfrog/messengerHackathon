@@ -108,6 +108,19 @@ public class HangmanSolveActivity extends Activity {
             case -1:
                 // Win condition
 
+                final GenericPopup winPopup = new GenericPopup(this, "You Won!! Share now :)", true);
+                winPopup.setContentView(R.layout.generic_popup);
+                winPopup.show();
+                winPopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
+                    @Override
+                    public void OnClose(GenericPopup popup) {
+                        // Add share Code here...
+
+                        // On completion do this:
+                        Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
             case 0:
                 iv.setImageResource(R.drawable.hangman_0);
@@ -138,12 +151,9 @@ public class HangmanSolveActivity extends Activity {
                 // Game over
                 iv.setImageResource(R.drawable.hangman_8);
 
-                // custom dialog
                 final GenericPopup losePopup = new GenericPopup(this, "You lost! Now get Lost!!", false, "Okay");
                 losePopup.setContentView(R.layout.generic_popup);
-                //dialog.setTitle("You lost!");
                 losePopup.show();
-
                 losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                     @Override
                     public void OnClose(GenericPopup popup) {
