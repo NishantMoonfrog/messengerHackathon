@@ -118,13 +118,19 @@ public class HangmanSolveActivity extends Activity {
             case 5:
                 iv.setImageResource(R.drawable.hangman_5);
                 break;
-            case 7:
-                // Game over
+            case 6:
                 iv.setImageResource(R.drawable.hangman_6);
+                break;
+            case 7:
+                iv.setImageResource(R.drawable.hangman_7);
+                break;
+            case 8:
+                // Game over
+                iv.setImageResource(R.drawable.hangman_8);
                 break;
             default:
                 // Game over
-                iv.setImageResource(R.drawable.hangman_6);
+                iv.setImageResource(R.drawable.hangman_8);
                 break;
         }
 

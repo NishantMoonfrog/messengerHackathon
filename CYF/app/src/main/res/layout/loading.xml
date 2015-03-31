@@ -34,7 +34,6 @@
             android:id="@+id/imageView2"
             android:background="@drawable/loding2"
             android:layout_gravity="center_vertical"
-            android:nestedScrollingEnabled="true"
             android:layout_marginLeft="3dp" />
     </LinearLayout>
 
