@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,21 +75,34 @@ public class HangmanSolveActivity extends Activity {
         tv.setText(current_status);
         tv.setTextSize(30);
 
+        ImageView iv = (ImageView) findViewById(R.id.hangman_image);
+
         switch(num_wrong_choices) {
-            case 0: break;
-            case 1: break;
-            case 2: break;
-            case 3: break;
-            case 4: break;
-            case 5: break;
-            case 6: break;
-            case 7: break;
-            case 8: break;
-            case 9:
+            case 0:
+                iv.setImageResource(R.drawable.hangman_0);
+                break;
+            case 1:
+                iv.setImageResource(R.drawable.hangman_1);
+                break;
+            case 2:
+                iv.setImageResource(R.drawable.hangman_2);
+                break;
+            case 3:
+                iv.setImageResource(R.drawable.hangman_3);
+                break;
+            case 4:
+                iv.setImageResource(R.drawable.hangman_4);
+                break;
+            case 5:
+                iv.setImageResource(R.drawable.hangman_5);
+                break;
+            case 7:
                 // Game over
+                iv.setImageResource(R.drawable.hangman_6);
                 break;
             default:
                 // Game over
+                iv.setImageResource(R.drawable.hangman_6);
                 break;
         }
 
