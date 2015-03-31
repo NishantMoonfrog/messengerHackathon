@@ -53,9 +53,9 @@ public class HangmanSolveActivity extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            final_word = AESEncryption.decrypt(word);
-            final_word.toUpperCase();
+            final_word = Globals.decrypt(word);
             List<String> participantIds = mThreadParams.participants;
+            final_word.toUpperCase();
         }
 
         if(current_status.equals("")) {
