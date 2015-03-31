@@ -1,57 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.moonfrog.cyf.view.SquareLayout
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
-    android:background="@drawable/bg1"
+    android:background="#ff1ab3ab"
     android:weightSum="1"
     style="@style/com_facebook_loginview_silver_style"
     android:gravity="center_vertical|center_horizontal"
     android:measureWithLargestChild="false">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
-        android:layout_gravity="top"
-        android:gravity="top">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/hangman_6" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
+        android:text="Nishant"
+        android:id="@+id/name"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#ff060606"
+        android:textSize="48dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nishant Varshney"
-            android:id="@+id/name"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="#ff060606"
-            android:textSize="40dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="challenged you."
-            android:id="@+id/challengeText"
-            android:layout_gravity="center_horizontal"
-            android:textColor="#ff0d0d0d"
-            android:textSize="30dp" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="has\nchallenged you."
+        android:id="@+id/challengeText"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff0d0d0d"
+        android:textSize="30dp"
+        android:paddingTop="0dp"
+        android:gravity="center" />
 
 
-</LinearLayout>
+</com.moonfrog.cyf.view.SquareLayout>
