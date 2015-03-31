@@ -84,7 +84,7 @@ public class HangmanChallengeFragment extends Fragment {
                 JSONArray list = word_list.getJSONArray(categories[i]);
                 String[] strList = new String[list.length()];
                 for(int j = 0, count = list.length(); j < count; j++) {
-                    strList[j] = list.getString(j);
+                    strList[j] = list.getString(j).toUpperCase();
                 }
                 category_word_list[i] = strList;
             }
@@ -113,7 +113,7 @@ public class HangmanChallengeFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return categories[position];
+            return categories[position].toUpperCase();
         }
 
         @Override
@@ -124,18 +124,6 @@ public class HangmanChallengeFragment extends Fragment {
 
             ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
 
-//            final String[][] challenges_icons = {
-//                    {"Word 1", ""},
-//                    {"Word 2", ""},
-//                    {"Word 3", ""},
-//                    {"Word 4", ""},
-//                    {"Word U", ""},
-//                    {"Word V", ""},
-//                    {"Word W", ""},
-//                    {"Word X", ""},
-//                    {"Word Y", ""},
-//                    {"Word Z", ""}
-//            };
             ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
 
             for (String s : category_word_list[position]) {

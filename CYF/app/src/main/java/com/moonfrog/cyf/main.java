@@ -57,7 +57,7 @@ public class main extends Activity {
                     startActivity(intent);
                 }
             };
-            worker.schedule(task, 5, TimeUnit.SECONDS);
+            worker.schedule(task, 1500, TimeUnit.MILLISECONDS);
         }
     }
 

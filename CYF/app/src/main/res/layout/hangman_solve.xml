@@ -7,7 +7,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:background="#ff5591e9">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -29,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="0.1">
+            android:layout_weight="0.1"
+            android:background="#ff147ba0">
 
             <Button
                 android:layout_width="wrap_content"
@@ -37,7 +39,12 @@
                 android:text="A"
                 android:id="@+id/button_a"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -45,7 +52,12 @@
                 android:text="B"
                 android:id="@+id/button_b"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -53,7 +65,12 @@
                 android:text="C"
                 android:id="@+id/button_c"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -61,7 +78,12 @@
                 android:text="D"
                 android:id="@+id/button_d"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -69,7 +91,12 @@
                 android:text="E"
                 android:id="@+id/button_e"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -77,7 +104,12 @@
                 android:text="F"
                 android:id="@+id/button_f"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -85,7 +117,12 @@
                 android:text="G"
                 android:id="@+id/button_g"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +131,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             android:layout_gravity="center"
-            android:layout_weight="0.1">
+            android:layout_weight="0.1"
+            android:background="#ff147ba0">
 
             <Button
                 android:layout_width="wrap_content"
@@ -102,7 +140,12 @@
                 android:text="H"
                 android:id="@+id/button_h"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -110,7 +153,12 @@
                 android:text="I"
                 android:id="@+id/button_i"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -118,7 +166,12 @@
                 android:text="J"
                 android:id="@+id/button_j"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -126,7 +179,12 @@
                 android:text="K"
                 android:id="@+id/button_k"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -134,7 +192,12 @@
                 android:text="L"
                 android:id="@+id/button_l"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -142,7 +205,12 @@
                 android:text="M"
                 android:id="@+id/button_m"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -150,7 +218,12 @@
                 android:text="N"
                 android:id="@+id/button_n"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -159,7 +232,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="0.1">
+            android:layout_weight="0.1"
+            android:background="#ff147ba0">
 
             <Button
                 android:layout_width="wrap_content"
@@ -167,7 +241,12 @@
                 android:text="O"
                 android:id="@+id/button_o"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -175,7 +254,12 @@
                 android:text="P"
                 android:id="@+id/button_p"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -183,7 +267,12 @@
                 android:text="Q"
                 android:id="@+id/button_q"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -191,7 +280,12 @@
                 android:text="R"
                 android:id="@+id/button_r"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -199,7 +293,12 @@
                 android:text="S"
                 android:id="@+id/button_s"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -207,7 +306,12 @@
                 android:text="T"
                 android:id="@+id/button_t"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -215,7 +319,12 @@
                 android:text="U"
                 android:id="@+id/button_u"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -224,7 +333,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="0.1">
+            android:layout_weight="0.1"
+            android:background="#ff147ba0">
 
             <Button
                 android:layout_width="wrap_content"
@@ -233,7 +343,12 @@
                 android:id="@+id/button_unused_1"
                 android:layout_weight="0.142"
                 android:onClick="onCharButtonClick"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -241,7 +356,12 @@
                 android:text="V"
                 android:id="@+id/button_v"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -249,7 +369,12 @@
                 android:text="W"
                 android:id="@+id/button_w"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -257,7 +382,12 @@
                 android:text="X"
                 android:id="@+id/button_x"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -265,7 +395,12 @@
                 android:text="Y"
                 android:id="@+id/button_y"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -273,7 +408,12 @@
                 android:text="Z"
                 android:id="@+id/button_z"
                 android:layout_weight="0.142"
-                android:onClick="onCharButtonClick" />
+                android:onClick="onCharButtonClick"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -282,7 +422,12 @@
                 android:id="@+id/button_unused_2"
                 android:layout_weight="0.142"
                 android:onClick="onCharButtonClick"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:background="#ffffc506"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
