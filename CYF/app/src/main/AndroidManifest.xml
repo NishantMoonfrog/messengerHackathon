@@ -28,6 +28,10 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
+        <activity
+            android:name=".HangmanSolveActivity"
+            android:label="@string/hangman_solve_title" >
+        </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
     </application>

@@ -21,13 +21,21 @@ public class main extends Activity {
         setContentView(R.layout.loading);
         static_instance = this;
 
-        Runnable task = new Runnable() {
-            public void run() {
-                Intent intent = new Intent(main.this, ChallengeChooseActivity.class);
-                startActivity(intent);
-            }
-        };
-        worker.schedule(task, 5, TimeUnit.SECONDS);
+        boolean game_from_challenge_accept = true;
+
+        if(game_from_challenge_accept) {
+            Intent intent = new Intent(main.this, HangmanSolveActivity.class);
+            intent.putExtra("word", "MY COUNTRY");
+            startActivity(intent);
+        } else {
+            Runnable task = new Runnable() {
+                public void run() {
+                    Intent intent = new Intent(main.this, ChallengeChooseActivity.class);
+                    startActivity(intent);
+                }
+            };
+            worker.schedule(task, 5, TimeUnit.SECONDS);
+        }
     }
 
     @Override

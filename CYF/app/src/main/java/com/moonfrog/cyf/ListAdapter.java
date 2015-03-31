@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
  */
 public class ListAdapter extends BaseAdapter {
     public static class ListElement {
-        String name;
-        String icon;
-        public ListElement(String name, String icon) {
-            this.name = name;
-            this.icon = icon;
+        String name = "";
+        String icon = "";
+        public ListElement(String name_val, String icon_val) {
+            this.name = name_val;
+            this.icon = icon_val;
         }
     };
 
@@ -63,9 +64,9 @@ public class ListAdapter extends BaseAdapter {
             tv1.setText(((ListElement)getItem(position)).name);
             if(!((ListElement)getItem(position)).icon.equals("")) {
                 imageIcon.setImageResource(parentContext.getResources().getIdentifier(((ListElement)getItem(position)).icon, "drawable",  parentContext.getPackageName()));
+            } else {
+                ((ViewManager)imageIcon.getParent()).removeView(imageIcon);
             }
-            //tv1.setText(" List Item "+ " : " + position);
-            //imageIcon.setImage
         } catch (Exception e) {
             e.printStackTrace();
         }
