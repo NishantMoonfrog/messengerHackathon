@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,9 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Arrays;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.view.GenericPopup;
 
 import org.json.JSONObject;
@@ -112,6 +115,13 @@ public class HangmanSolveActivity extends Activity {
                 @Override
                 public void OnClose(GenericPopup popup) {
                     // NISHANT: Add share Code here...
+                    ShareToMessengerParams shareToMessengerParams =
+                            ShareToMessengerParams.newBuilder(Uri.fromFile(new File("/sdcard/Downloads/img.jpg")), "image/jpeg")
+                                    .build();
+
+                    if( mPicking ) {
+                        MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
+                    }
 
                     // On completion do this:
                     Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
@@ -155,6 +165,14 @@ public class HangmanSolveActivity extends Activity {
                         public void OnClose(GenericPopup popup) {
                             // NISHANT: Add share Code here...
 
+                            // ShareToMessengerParams shareToMessengerParams =
+                            //         ShareToMessengerParams.newBuilder(Uri.fromFile(new File("/sdcard/Downloads/img.jpg")), "image/jpeg")
+                            //                 .build();
+
+                            // if( mPicking ) {
+                            //     MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
+                            // }
+                            
                             Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
                             startActivity(intent);
                         }
