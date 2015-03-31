@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/hangman_image"
                 android:contentDescription="hangmanStateImage"
-                android:scaleType="fitCenter" />
+                android:scaleType="centerInside" />
         </LinearLayout>
 
         <LinearLayout
