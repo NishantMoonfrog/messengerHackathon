@@ -37,8 +37,13 @@ public class HangmanSolveActivity extends Activity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.current_status);
         ll.removeAllViewsInLayout();
 
-        TextView tv = new TextView(this);
+        LetterSpacingTextView tv = new LetterSpacingTextView(this);
+        tv.setLetterSpacing_(10); //Or any float. To reset to normal, use 0 or LetterSpacingTextView.Spacing.NORMAL
         tv.setText(current_status);
+        tv.setTextSize(30);
+
+        ll.addView(tv);
+        ll.setGravity(Gravity.CENTER);
         tv.setGravity(Gravity.CENTER);
     }
 }
