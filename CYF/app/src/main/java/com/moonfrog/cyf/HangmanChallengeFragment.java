@@ -124,23 +124,15 @@ public class HangmanChallengeFragment extends Fragment {
         mSlidingTabLayout.setViewPager(mViewPager);
 
         final HangmanChallengeFragment _this = this;
-        mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
+        class CustomPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 adp.currentPosition = position;
                 adp.updateWithSearchText(searchText);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        }
+        mSlidingTabLayout.setOnPageChangeListener(new CustomPageChangeListener());
 
         EditText searchBox = (EditText) view.findViewById(R.id.inputSearch);
         searchBox.addTextChangedListener(new TextWatcher() {
