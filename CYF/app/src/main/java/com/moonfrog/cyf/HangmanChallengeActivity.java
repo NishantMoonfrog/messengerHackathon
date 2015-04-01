@@ -34,6 +34,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -75,21 +77,42 @@ public class HangmanChallengeActivity extends FragmentActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Log.e("facebook", "Logged In");
-                        Profile profile = Profile.getCurrentProfile();
-                        Globals.name = profile.getFirstName();
-                        static_instance.challengeFriends();
-                        // App code
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        String name = null;
+                                        try {
+                                            JSONObject jsonObj = response.getJSONObject();
+                                            name = jsonObj.get("name").toString();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        if( name == null) {
+                                            Log.e("facebook", "couldn't fetch graph object");
+                                            return;
+                                        }
+                                        name = name.split(" ")[0];
+
+                                        Globals.name = name;
+                                        static_instance.challengeFriends();
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,link");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
                     }
 
                     @Override
                     public void onCancel() {
-                        // App code
                         Log.e("facebooK", "login cancelled");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        // App code
                         Log.e("error while login", exception.toString());
                     }
         });

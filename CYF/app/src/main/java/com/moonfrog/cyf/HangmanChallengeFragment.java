@@ -4,6 +4,7 @@ package com.moonfrog.cyf;
  * Created by srinath on 31/03/15.
  */
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.GraphRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
@@ -94,8 +96,12 @@ public class HangmanChallengeFragment extends Fragment {
             for(int i = 0 ; i < categories.length; i++) {
                 JSONArray list = word_list.getJSONArray(categories[i]);
                 String[] strList = new String[list.length()];
+                int idx = 0;
                 for(int j = 0, count = list.length(); j < count; j++) {
-                    strList[j] = list.getString(j).toUpperCase();
+                    if( list.getString(j).length() < 15 ) {
+                        strList[idx] = list.getString(j).toUpperCase();
+                        idx++;
+                    }
                 }
                 category_word_list[i] = strList;
             }
@@ -109,6 +115,13 @@ public class HangmanChallengeFragment extends Fragment {
 
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+    }
+    
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        final HangmanChallengeActivity currentActivity = (HangmanChallengeActivity) getActivity();
+        currentActivity.onActivityResult(requestCode, resultCode, data);
     }
 
     class HangmanChallengePageAdapter extends PagerAdapter {
