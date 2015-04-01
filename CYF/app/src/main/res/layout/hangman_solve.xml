@@ -36,7 +36,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:weightSum="1">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="#ff147ba0">
+                android:background="#ff147ba0"
+                android:layout_weight="0.2">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -158,7 +160,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_gravity="center"
-                android:background="#ff147ba0">
+                android:background="#ff147ba0"
+                android:layout_weight="0.2">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -272,7 +275,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="#ff147ba0">
+                android:background="#ff147ba0"
+                android:layout_weight="0.2">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -386,7 +390,8 @@
                 android:layout_height="wrap_content"
                 android:background="#ff147ba0"
                 android:gravity="center_vertical|center_horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_weight="0.2">
 
                 <Button
                     android:layout_width="wrap_content"
