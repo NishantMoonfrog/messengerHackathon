@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +38,8 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 public class HangmanChallengeFragment extends Fragment {
 
@@ -69,6 +74,7 @@ public class HangmanChallengeFragment extends Fragment {
 
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
+    private String searchText = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,15 +101,14 @@ public class HangmanChallengeFragment extends Fragment {
 
             for(int i = 0 ; i < categories.length; i++) {
                 JSONArray list = word_list.getJSONArray(categories[i]);
-                String[] strList = new String[list.length()];
-                int idx = 0;
+                ArrayList<String> strList = new ArrayList<>();
                 for(int j = 0, count = list.length(); j < count; j++) {
                     if( list.getString(j).length() < 15 ) {
-                        strList[idx] = list.getString(j).toUpperCase();
-                        idx++;
+                        strList.add(list.getString(j).toUpperCase());
                     }
                 }
-                category_word_list[i] = strList;
+                category_word_list[i] = strList.toArray(new String[strList.size()]);
+                Arrays.sort(category_word_list[i]);
             }
 
         } catch (Exception e) {
@@ -111,20 +116,57 @@ public class HangmanChallengeFragment extends Fragment {
         }
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new HangmanChallengePageAdapter());
+        final HangmanChallengePageAdapter adp = new HangmanChallengePageAdapter();
+        adp.listViewStore = new ListView[categories.length];
+        mViewPager.setAdapter(adp);
 
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
-    }
-    
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        final HangmanChallengeActivity currentActivity = (HangmanChallengeActivity) getActivity();
-        currentActivity.onActivityResult(requestCode, resultCode, data);
+
+        final HangmanChallengeFragment _this = this;
+        mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                adp.currentPosition = position;
+                adp.updateWithSearchText(searchText);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        EditText searchBox = (EditText) view.findViewById(R.id.inputSearch);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                searchText = cs.toString().toLowerCase();
+                adp.updateWithSearchText(searchText);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
+
     class HangmanChallengePageAdapter extends PagerAdapter {
+        public ListView[] listViewStore;
+        int currentPosition = 0;
         @Override
         public int getCount() {
             return categories.length;
@@ -147,16 +189,10 @@ public class HangmanChallengeFragment extends Fragment {
             View view = currentActivity.getLayoutInflater().inflate(R.layout.hangman_challenge_pager_item, container, false);
             container.addView(view);
 
-            ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
-
-            ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
-
-            for (String s : category_word_list[position]) {
-                sliderMenu.add(new ListAdapter.ListElement(s, ""));
-            }
-
-            ListAdapter mAdapter = new ListAdapter(view.getContext(), sliderMenu);
+            final ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
+            ListAdapter mAdapter = new ListAdapter(view.getContext(), Globals.getFilteredList(category_word_list[position], ""));
             listView.setAdapter(mAdapter);
+            listViewStore[position] = listView;
 
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -181,6 +217,13 @@ public class HangmanChallengeFragment extends Fragment {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+
+        public void updateWithSearchText(String text) {
+            ListView listView = listViewStore[currentPosition];
+            ListAdapter mAdapter = new ListAdapter(getActivity().getBaseContext(), Globals.getFilteredList(category_word_list[currentPosition], searchText));
+            listView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".HangmanChallengeActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/hangman_challenge" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

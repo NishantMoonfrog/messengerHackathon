@@ -7,10 +7,12 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -65,7 +67,7 @@ public class Globals {
         ByteArrayOutputStream stream = null;
         try {
             stream = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            b.compress(Bitmap.CompressFormat.PNG, 30, stream);
             byte[] byteArray = stream.toByteArray();
             return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         } catch (Exception e) {
@@ -83,6 +85,57 @@ public class Globals {
             encoder.addFrame(bitmap);
         }
         encoder.finish();
+        Log.e("gif", "generated");
         return bos.toByteArray();
+    }
+
+    public static int findStartIndex(String[] array, String searchText) {
+        int low = 0, high = array.length - 1, mid;
+        if( high < 0 ) {
+            return 0;
+        }
+
+        while(low < high) {
+            mid = (low + high) / 2;
+            if( array[mid].toLowerCase().startsWith(searchText) || array[mid].compareToIgnoreCase(searchText) > 0 ) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+        if( array[low].toLowerCase().startsWith(searchText) ) {
+            return low;
+        }
+        return low + 1;
+    }
+
+    public static int findEndIndex(String[] array, String searchText) {
+        int low = 0, high = array.length - 1, mid;
+        if( high < 0 ) {
+            return -1;
+        }
+
+        while(low < high) {
+            mid = (low + high + 1) / 2;
+            if( array[mid].toLowerCase().startsWith(searchText) || array[mid].compareToIgnoreCase(searchText) < 0 ) {
+                low = mid;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        if( array[low].toLowerCase().startsWith(searchText) ) {
+            return low;
+        }
+        return -1;
+    }
+
+    public static ArrayList<ListAdapter.ListElement> getFilteredList(String[] array, String searchText) {
+        ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
+
+        for (int i = findStartIndex(array, searchText), last = findEndIndex(array, searchText) ; i <= last ; i++) {
+            sliderMenu.add(new ListAdapter.ListElement(array[i], ""));
+        }
+        return sliderMenu;
     }
 }

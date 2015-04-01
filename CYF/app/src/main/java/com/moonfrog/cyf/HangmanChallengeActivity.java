@@ -200,13 +200,16 @@ public class HangmanChallengeActivity extends FragmentActivity {
                         if( bitmaps.size() < 3 ) {
                             return;
                         }
+                        current.invalidate();
+                        Log.e("facebook ", "Invalidated");
 
                         FileOutputStream outStream = null;
                         String gifPath = path + "challenge.gif";
-                        try{
+                        try {
                             outStream = new FileOutputStream(gifPath);
                             outStream.write(Globals.generateGIF(bitmaps));
                             outStream.close();
+                            Log.e("challenge ", "saved");
                         } catch(Exception e){
                             e.printStackTrace();
                         }
@@ -226,6 +229,7 @@ public class HangmanChallengeActivity extends FragmentActivity {
                         Uri.Builder b = new Uri.Builder();
                         b.scheme("file").appendPath(gifPath);
                         Uri contentUri = b.build();
+                        Log.e("uri ", "built");
                         ShareToMessengerParams shareToMessengerParams =
                                 ShareToMessengerParams.newBuilder(contentUri, "image/gif")
                                         .setMetaData(metadata)
