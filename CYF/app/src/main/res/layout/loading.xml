@@ -4,17 +4,30 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_login">
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/moonfroglabs" />
+        android:id="@+id/imageView3"
+        android:background="@drawable/icon_big"
+        android:layout_gravity="center" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Challenge your Friends!"
+        android:id="@+id/loading_text"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="52dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#ffffffff"
+        android:textIsSelectable="true" />
 
     <Space
         android:layout_width="wrap_content"

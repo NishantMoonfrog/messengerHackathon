@@ -2,6 +2,7 @@ package com.moonfrog.cyf;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.content.ContentUris;
 import android.graphics.Bitmap;
@@ -43,22 +44,17 @@ public class main extends Activity {
         setContentView(R.layout.loading);
         static_instance = this;
 
-        boolean game_from_challenge_accept = true;
-        game_from_challenge_accept = false;
+        TextView tv = (TextView) findViewById(R.id.loading_text);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/brady.ttf");
+        tv.setTypeface(tf);
 
-        if(game_from_challenge_accept) {
-            Intent intent = new Intent(main.this, HangmanSolveActivity.class);
-            intent.putExtra("word", "MY COUNTRY");
-            startActivity(intent);
-        } else {
-            Runnable task = new Runnable() {
-                public void run() {
-                    Intent intent = new Intent(main.this, ChallengeChooseActivity.class);
-                    startActivity(intent);
-                }
-            };
-            worker.schedule(task, 1500, TimeUnit.MILLISECONDS);
-        }
+        Runnable task = new Runnable() {
+            public void run() {
+                Intent intent = new Intent(main.this, ChallengeChooseActivity.class);
+                startActivity(intent);
+            }
+        };
+        worker.schedule(task, 1500, TimeUnit.MILLISECONDS);
     }
 
     public void onHangmanClick(View v) {
