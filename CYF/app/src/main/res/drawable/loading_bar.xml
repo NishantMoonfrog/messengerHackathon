@@ -25,11 +25,18 @@
                     android:centerY="0.5"
                     android:endColor="#00ff00"
                     android:angle="270" />
-
-                <padding android:bottom="3dip"
-                    android:left="2dip"
-                    android:right="2dip"
-                    android:top="3dip" />
+                <margin
+                    android:bottom="30dip"
+                    android:left="20dip"
+                    android:right="20dip"
+                    android:top="30dip"
+                    />
+                <padding
+                    android:bottom="30dip"
+                    android:left="20dip"
+                    android:right="20dip"
+                    android:top="30dip"
+                    />
             </shape>
         </clip>
         <!--<clip android:gravity="fill">-->
