@@ -206,5 +206,9 @@ public class main extends Activity {
         super.onPause();
         AppEventsLogger.deactivateApp(this);
     }
+
+    public static void postToMessenger(ShareToMessengerParams shareToMessengerParams) {
+        MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
+    }
 }
 

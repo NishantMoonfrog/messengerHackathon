@@ -124,7 +124,7 @@ public class HangmanSolveActivity extends Activity {
 
         if(completed) {
             // Win condition
-            GenericPopup winPopup = new GenericPopup(this, "You completed the challenge in " + num_wrong_choices + " turns!", true);
+            GenericPopup winPopup = new GenericPopup(this, "You completed the challenge in " + (num_wrong_choices +1) + " turns!", true);
             winPopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                 @Override
                 public void OnClose(GenericPopup popup) {
@@ -163,7 +163,7 @@ public class HangmanSolveActivity extends Activity {
                     imageView.setImageDrawable(getResources().getDrawable(id));
 
                     TextView tv = new TextView(static_instance);
-                    String text = "I cracked " + challengerName + "'s challenge in " + num_wrong_choices+1 + " turns!";
+                    String text = "I cracked " + challengerName + "'s challenge in " + (num_wrong_choices+1) + " turns!";
                     tv.setPadding(0, 10, 0, 0);
                     tv.setText(text);
                     tv.setTextSize(40);
@@ -207,9 +207,8 @@ public class HangmanSolveActivity extends Activity {
                             }
 
                             ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/png").setMetaData(metadata).build();
-                            if( mPicking ) {
-                                MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
-                            }
+                            main.static_instance.postToMessenger(shareToMessengerParams);
+                            finish();
                         }
                     });
 
@@ -265,6 +264,7 @@ public class HangmanSolveActivity extends Activity {
                             
                             Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                     losePopup.show();
