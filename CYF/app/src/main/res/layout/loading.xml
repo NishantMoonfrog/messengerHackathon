@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_login">
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +19,7 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2" />
+        android:layout_weight="0.1" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +29,7 @@
         android:id="@+id/loading_text"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:textSize="52dp"
+        android:textSize="60dp"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#ffffffff"
         android:textIsSelectable="true" />
@@ -32,23 +37,17 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2" />
+        android:layout_weight="0.1" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.005"
-        android:background="@drawable/loding">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:background="@drawable/loding2"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3dp" />
-    </LinearLayout>
+        android:id="@+id/preload_bar"
+        android:progressDrawable="@drawable/loading_bar"
+        android:layout_gravity="center"
+        android:background="@drawable/loding"
+        android:layout_weight="0.1" />
 
     <Space
         android:layout_width="wrap_content"

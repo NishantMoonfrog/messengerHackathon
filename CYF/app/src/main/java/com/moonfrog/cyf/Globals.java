@@ -30,6 +30,35 @@ public class Globals {
 
     private static String key = "nishant__srinath";
     public static String name = "";
+
+
+    public static String[] hangman_challenge_categories = {
+            "Countries",
+            "Animals",
+            "Cities",
+            "Movies",
+            "Sports",
+            "Games"
+    };
+
+    public static String[] hangman_challenge_categories_singular = {
+            "Country",
+            "Animal",
+            "City",
+            "Movie",
+            "Sports",
+            "Game"
+    };
+
+    public static String[][] hangman_challenge_category_word_list = {
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+    };
+
     public static String encrypt(String text) {
       try {
             Key aesKey = new SecretKeySpec(key.getBytes(), "AES");

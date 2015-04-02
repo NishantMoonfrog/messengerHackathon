@@ -46,6 +46,8 @@ public class HangmanSolveActivity extends Activity {
     private int num_wrong_choices = 0;
     private boolean completed = false;
 
+    private String[] participantIds;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +55,13 @@ public class HangmanSolveActivity extends Activity {
         static_instance = this;
 
         Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+        challengerName = extras.getString("challengerName", "");
+        final_word = extras.getString("final_word", "");
+        mPicking = extras.getBoolean("mPicking", false);
+        participantIds = extras.getStringArray("participantIds");
 
-        String word = "";
+/*        String word = "";
         if (Intent.ACTION_PICK.equals(intent.getAction())) {
             mPicking = true;
             MessengerThreadParams mThreadParams = MessengerUtils.getMessengerThreadParamsForIntent(intent);
@@ -70,7 +77,7 @@ public class HangmanSolveActivity extends Activity {
             final_word = Globals.decrypt(word);
             List<String> participantIds = mThreadParams.participants;
             final_word.toUpperCase();
-        }
+        }*/
 
         if(current_status.equals("")) {
             current_status = final_word.replaceAll("[A-Z]", "_");
@@ -197,11 +204,8 @@ public class HangmanSolveActivity extends Activity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            ShareToMessengerParams shareToMessengerParams =
-                                    ShareToMessengerParams.newBuilder(contentUri, "image/png")
-                                            .setMetaData(metadata)
-                                            .build();
 
+                            ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/png").setMetaData(metadata).build();
                             if( mPicking ) {
                                 MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
                             }
