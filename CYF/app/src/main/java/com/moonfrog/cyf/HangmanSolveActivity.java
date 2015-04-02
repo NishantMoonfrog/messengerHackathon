@@ -59,7 +59,7 @@ public class HangmanSolveActivity extends Activity {
         challengerName = extras.getString("challengerName", "");
         final_word = extras.getString("final_word", "");
         mPicking = extras.getBoolean("mPicking", false);
-        participantIds = extras.getStringArray("participantIds");
+        // participantIds = extras.getStringArray("participantIds");
 
 /*        String word = "";
         if (Intent.ACTION_PICK.equals(intent.getAction())) {

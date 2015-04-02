@@ -134,7 +134,7 @@ public class main extends Activity {
                         params.putString("final_word", final_word);
                         params.putBoolean("mPicking", true);
                         params.putString("challengerName", challengerName);
-                        params.putStringArray("participantIds", (String[])participantIds.toArray());
+                        // params.putStringArray("participantIds", (String[])participantIds.toArray());
 
                         targetIntent = new Intent(main.this, HangmanSolveActivity.class);
                         targetIntent.putExtras(params);
