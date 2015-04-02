@@ -163,7 +163,7 @@ public class HangmanSolveActivity extends Activity {
                     imageView.setImageDrawable(getResources().getDrawable(id));
 
                     TextView tv = new TextView(static_instance);
-                    String text = "I cracked " + challengerName + "'s challenge in " + num_wrong_choices + " moves!";
+                    String text = "I cracked " + challengerName + "'s challenge in " + num_wrong_choices+1 + " turns!";
                     tv.setPadding(0, 10, 0, 0);
                     tv.setText(text);
                     tv.setTextSize(40);
