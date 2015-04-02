@@ -15,6 +15,10 @@ public class FixedSizeSquareLayout extends SquareLayout {
         super(context, attrs, defStyle);
     }
 
+    public FixedSizeSquareLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
     @Override public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
         setMeasuredDimension(700, 700);

@@ -168,6 +168,7 @@ public class HangmanSolveActivity extends Activity {
                     tv.setText(text);
                     tv.setTextSize(40);
                     tv.setGravity(Gravity.CENTER);
+                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                     LinearLayout ll = (LinearLayout) v.findViewById(R.id.win_view);
                     ll.addView(tv);

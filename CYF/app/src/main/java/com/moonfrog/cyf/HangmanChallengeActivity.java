@@ -1,5 +1,6 @@
 package com.moonfrog.cyf;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -42,6 +43,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.Globals;
+import com.moonfrog.cyf.view.FixedSizeSquareLayout;
+
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -164,22 +167,25 @@ public class HangmanChallengeActivity extends FragmentActivity {
             }
 
             if( i == 3 ) {
+                LinearLayout ll = (LinearLayout) v.findViewById(R.id.dashLayout);
+
                 LetterSpacingTextView tv = new LetterSpacingTextView(this);
                 tv.setLetterSpacing_(12); //Or any float. To reset to normal, use 0 or LetterSpacingTextView.Spacing.NORMAL
                 String current_status = selectedWord.replaceAll("[A-Z]", "_");
                 tv.setText(current_status);
-                tv.setTextSize(36);
+                tv.setTextSize(30);
                 tv.setTypeface(Typeface.DEFAULT_BOLD);
                 tv.setGravity(Gravity.CENTER);
+                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
                 TextView tv2 = new TextView(this);
                 String text = "Guess the " + selectedTopic + "?";
                 tv2.setPadding(0, 10, 0, 0);
                 tv2.setText(text);
-                tv2.setTextSize(36);
+                tv2.setTextSize(30);
                 tv2.setGravity(Gravity.CENTER);
+                tv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                LinearLayout ll = (LinearLayout) v.findViewById(R.id.dashLayout);
                 ll.addView(tv);
                 ll.addView(tv2);
             }
