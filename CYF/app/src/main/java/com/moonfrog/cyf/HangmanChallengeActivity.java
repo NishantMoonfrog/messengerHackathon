@@ -57,6 +57,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 
 /**
  * Created by srinath on 30/03/15.
@@ -136,7 +137,7 @@ public class HangmanChallengeActivity extends FragmentActivity {
 
     public void challengeFriends() {
         final String shaHash = Globals.encrypt(selectedWord);
-        
+
         // final String path = Environment.getExternalStorageState() + "/cyfTemp/";
         final String path = "/sdcard/cyfTemp/";
         File folder = new File(path);
@@ -148,107 +149,80 @@ public class HangmanChallengeActivity extends FragmentActivity {
             Log.e("Couldn't create folder ", path);
             return;
         }
-        // final ArrayList<Object> count = new ArrayList<>();
-        final ArrayList< Bitmap > bitmaps = new ArrayList<>();
 
-        for(int i = 1 ; i <= 3 ; i++) {
-            LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            int id = R.layout.challenge_hangman_gif_3;
-            if( i == 1 ) {
-                id = R.layout.challenge_hangman_gif_1;
-            } else if( i == 2 ) {
-                id = R.layout.challenge_hangman_gif_2;
-            }
-            final View v = layoutInflater.inflate(id, null);
+        int layouts[] = {R.layout.challenge_hangman_gif_1, R.layout.challenge_hangman_gif_2, R.layout.challenge_hangman_gif_3};
 
-            if( i == 1 ) {
-                TextView vTemp = (TextView) v.findViewById(R.id.name);
-                vTemp.setText(Globals.name);
-            }
+        ViewUpdateCall[] viewChanges = {
+                new ViewUpdateCall() {
+                    @Override
+                    public void updateView(View v) {
+                        TextView vTemp = (TextView) v.findViewById(R.id.name);
+                        vTemp.setText(Globals.name);
+                    }
+                },
+                new ViewUpdateCall() {
+                    @Override
+                    public void updateView(View v) {
 
-            if( i == 3 ) {
-                LinearLayout ll = (LinearLayout) v.findViewById(R.id.dashLayout);
+                    }
+                },
+                new ViewUpdateCall() {
+                    @Override
+                    public void updateView(View v) {
+                        LinearLayout ll = (LinearLayout) v.findViewById(R.id.dashLayout);
 
-                LetterSpacingTextView tv = new LetterSpacingTextView(this);
-                tv.setLetterSpacing_(12); //Or any float. To reset to normal, use 0 or LetterSpacingTextView.Spacing.NORMAL
-                String current_status = selectedWord.replaceAll("[A-Z]", "_");
-                tv.setText(current_status);
-                tv.setTextSize(30);
-                tv.setTypeface(Typeface.DEFAULT_BOLD);
-                tv.setGravity(Gravity.CENTER);
-                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                        LetterSpacingTextView tv = new LetterSpacingTextView(static_instance);
+                        tv.setLetterSpacing_(12); //Or any float. To reset to normal, use 0 or LetterSpacingTextView.Spacing.NORMAL
+                        String current_status = selectedWord.replaceAll("[A-Z]", "_");
+                        tv.setText(current_status);
+                        tv.setTextSize(30);
+                        tv.setTypeface(Typeface.DEFAULT_BOLD);
+                        tv.setGravity(Gravity.CENTER);
+                        tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                TextView tv2 = new TextView(this);
-                String text = "Guess the " + selectedTopic + "?";
-                tv2.setPadding(0, 10, 0, 0);
-                tv2.setText(text);
-                tv2.setTextSize(30);
-                tv2.setGravity(Gravity.CENTER);
-                tv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                        TextView tv2 = new TextView(static_instance);
+                        String text = "Guess the " + selectedTopic + "?";
+                        tv2.setPadding(0, 10, 0, 0);
+                        tv2.setText(text);
+                        tv2.setTextSize(30);
+                        tv2.setGravity(Gravity.CENTER);
+                        tv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                ll.addView(tv);
-                ll.addView(tv2);
-            }
-
-            final int idx = i;
-
-            final ViewGroup current = (ViewGroup) getWindow().getDecorView().getRootView();
-            current.addView(v, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-
-            v.post(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap image = Globals.getBitmapFromView(v);
-                    current.removeView(v);
-
-                    synchronized (bitmaps) {
-                        bitmaps.add(image);
-                        if( bitmaps.size() < 3 ) {
-                            return;
-                        }
-                        current.invalidate();
-                        Log.e("facebook ", "Invalidated");
-
-                        FileOutputStream outStream = null;
-                        String gifPath = path + "challenge.gif";
-                        try {
-                            outStream = new FileOutputStream(gifPath);
-                            outStream.write(Globals.generateGIF(bitmaps));
-                            outStream.close();
-                            Log.e("challenge ", "saved");
-                        } catch(Exception e){
-                            e.printStackTrace();
-                        }
-
-                        // String path = MediaStore.Images.Media.insertImage(static_instance.getContentResolver(), image, "Title", null);
-
-                        String metadata = "";
-                        try {
-                            JSONObject metadataJson = new JSONObject();
-                            metadataJson.put("word", shaHash);
-                            metadataJson.put("name", Globals.name);
-                            metadata = metadataJson.toString();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        Uri.Builder b = new Uri.Builder();
-                        b.scheme("file").appendPath(gifPath);
-                        Uri contentUri = b.build();
-                        Log.e("uri ", "built");
-                        ShareToMessengerParams shareToMessengerParams =
-                                ShareToMessengerParams.newBuilder(contentUri, "image/gif")
-                                        .setMetaData(metadata)
-                                        .build();
-
-                        MessengerUtils.shareToMessenger(
-                            static_instance,
-                            10,
-                            shareToMessengerParams
-                        );
+                        ll.addView(tv);
+                        ll.addView(tv2);
                     }
                 }
-            });
-        }
+        };
+        final String gifPath = path + "challenge.gif";
+        Runnable callback = new Runnable() {
+            @Override
+            public void run() {
+                String metadata = "";
+                try {
+                    JSONObject metadataJson = new JSONObject();
+                    metadataJson.put("word", shaHash);
+                    metadataJson.put("name", Globals.name);
+                    metadata = metadataJson.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Uri.Builder b = new Uri.Builder();
+                b.scheme("file").appendPath(gifPath);
+                Uri contentUri = b.build();
+                Log.e("uri ", "built");
+                ShareToMessengerParams shareToMessengerParams =
+                        ShareToMessengerParams.newBuilder(contentUri, "image/gif")
+                                .setMetaData(metadata)
+                                .build();
+
+                MessengerUtils.shareToMessenger(
+                        static_instance,
+                        10,
+                        shareToMessengerParams
+                );
+            }
+        };
+        Globals.makeGIF(static_instance, layouts, viewChanges, gifPath, callback);
     }
 }
