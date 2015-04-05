@@ -134,10 +134,10 @@ public class Globals {
 
         while(low < high) {
             mid = (low + high) / 2;
-            if( array[mid].toLowerCase().startsWith(searchText) || array[mid].compareToIgnoreCase(searchText) > 0 ) {
-                high = mid;
-            } else {
+            if( array[mid].compareToIgnoreCase(searchText) < 0 ) {
                 low = mid + 1;
+            } else {
+                high = mid;
             }
         }
         if( array[low].toLowerCase().startsWith(searchText) ) {
@@ -167,11 +167,11 @@ public class Globals {
         return -1;
     }
 
-    public static ArrayList<ListAdapter.ListElement> getFilteredList(String[] array, String searchText) {
-        ArrayList<ListAdapter.ListElement> sliderMenu = new ArrayList<>();
+    public static ArrayList<String> getFilteredList(String[] array, String searchText) {
+        ArrayList<String> sliderMenu = new ArrayList<>();
 
         for (int i = findStartIndex(array, searchText), last = findEndIndex(array, searchText) ; i <= last ; i++) {
-            sliderMenu.add(new ListAdapter.ListElement(array[i], ""));
+            sliderMenu.add(array[i]);
         }
         return sliderMenu;
     }

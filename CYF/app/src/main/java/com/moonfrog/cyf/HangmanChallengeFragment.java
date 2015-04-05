@@ -4,16 +4,19 @@ package com.moonfrog.cyf;
  * Created by srinath on 31/03/15.
  */
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -48,6 +51,7 @@ public class HangmanChallengeFragment extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         final HangmanChallengePageAdapter adp = new HangmanChallengePageAdapter();
         adp.listViewStore = new ListView[Globals.hangman_challenge_categories.length];
+        adp.listContext = getActivity().getBaseContext();
         mViewPager.setAdapter(adp);
 
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
@@ -88,6 +92,7 @@ public class HangmanChallengeFragment extends Fragment {
 
     class HangmanChallengePageAdapter extends PagerAdapter {
         public ListView[] listViewStore;
+        Context listContext;
         int currentPosition = 0;
         @Override
         public int getCount() {
@@ -112,7 +117,7 @@ public class HangmanChallengeFragment extends Fragment {
             container.addView(view);
 
             final ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
-            ListAdapter mAdapter = new ListAdapter(view.getContext(), Globals.getFilteredList(Globals.hangman_challenge_category_word_list[position], ""));
+            ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.simplerow, Globals.getFilteredList(Globals.hangman_challenge_category_word_list[currentPosition], searchText));
             listView.setAdapter(mAdapter);
             listViewStore[position] = listView;
 
@@ -143,7 +148,8 @@ public class HangmanChallengeFragment extends Fragment {
 
         public void updateWithSearchText(String text) {
             ListView listView = listViewStore[currentPosition];
-            ListAdapter mAdapter = new ListAdapter(getActivity().getBaseContext(), Globals.getFilteredList(Globals.hangman_challenge_category_word_list[currentPosition], searchText));
+            Log.e("updating ", text + " " + (getActivity().getBaseContext() == null ? 1 : 0));
+            ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(listContext, R.layout.simplerow, Globals.getFilteredList(Globals.hangman_challenge_category_word_list[currentPosition], searchText));
             listView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }
