@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.moonfrog.cyf.view.ViewUpdateCall;
 
@@ -77,19 +78,6 @@ public class Globals {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
-        encoder.setDelay(1000);
-        encoder.start(bos);
-        for (Bitmap bitmap : bitmaps) {
-            encoder.addFrame(bitmap);
-        }
-        encoder.finish();
-        Log.e("gif", "generated");
-        return bos.toByteArray();
     }
 
     public static int findStartIndex(String[] array, String searchText) {
@@ -190,73 +178,5 @@ public class Globals {
             sliderMenu.add(array.getString(i));
         }
         return sliderMenu;
-    }
-
-    public static void makeGIF(Activity owner, int[] ids, ViewUpdateCall[] viewChanges, final String gifPath, final Runnable callback) {
-        final ArrayList< Bitmap > bitmaps = new ArrayList<>();
-
-        for(int i = 0 ; i < ids.length ; i++) {
-            LayoutInflater layoutInflater = (LayoutInflater) owner.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            final View v = layoutInflater.inflate(ids[i], null);
-            viewChanges[i].updateView(v);
-
-            final ViewGroup current = (ViewGroup) owner.getWindow().getDecorView().getRootView();
-            current.addView(v, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-
-            v.post(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap image = Globals.getBitmapFromView(v);
-                    current.removeView(v);
-
-                    synchronized (bitmaps) {
-                        bitmaps.add(image);
-                        if( bitmaps.size() < 3 ) {
-                            return;
-                        }
-                        current.invalidate();
-                        Log.e("facebook ", "Invalidated");
-
-                        class MyTaskParams {
-                            ArrayList<Bitmap> bitmaps;
-                            String gifPath;
-                            Runnable callback;
-
-                            MyTaskParams(ArrayList<Bitmap> bitmaps, String path, Runnable callback) {
-                                this.bitmaps = bitmaps;
-                                this.gifPath = path;
-                                this.callback = callback;
-                            }
-                        }
-
-                        class BuildGIF extends AsyncTask<MyTaskParams, Void, Void> {
-                            @Override
-                            protected Void doInBackground(MyTaskParams... params) {
-                                ArrayList<Bitmap> bitmaps = params[0].bitmaps;
-                                String gifPath = params[0].gifPath;
-                                FileOutputStream outStream = null;
-                                try {
-                                    outStream = new FileOutputStream(gifPath);
-                                    outStream.write(Globals.generateGIF(bitmaps));
-                                    outStream.close();
-                                    Log.e("challenge ", "saved");
-                                } catch(Exception e){
-                                    e.printStackTrace();
-                                }
-                                params[0].callback.run();
-                                return null;
-                            }
-                        }
-
-                        MyTaskParams params = new MyTaskParams(bitmaps, gifPath, callback);
-                        BuildGIF builder = new BuildGIF();
-                        builder.execute(params);
-
-                        // String path = MediaStore.Images.Media.insertImage(static_instance.getContentResolver(), image, "Title", null);
-                    }
-                }
-            });
-        }
     }
 }

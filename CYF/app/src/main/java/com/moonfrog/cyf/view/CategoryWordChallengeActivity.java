@@ -1,13 +1,20 @@
 package com.moonfrog.cyf.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,10 +28,14 @@ import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
+import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTask;
+import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTaskParams;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by srinath on 30/03/15.
@@ -129,7 +140,23 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
             }
         }
 
+        final ArrayList< Bitmap > bitmaps = new ArrayList<>();
+        for(int i = 0 ; i < challenge_layouts.length ; i++) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View v = layoutInflater.inflate(challenge_layouts[i], null);
+            getViewChanges()[i].updateView(v);
+            if (v.getMeasuredHeight() <= 0) {
+                v.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            }
+            Bitmap image = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(image);
+            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+            v.draw(c);
+            bitmaps.add(image);
+        }
+
         final String gifPath = path + "challenge.gif";
+
         Runnable callback = new Runnable() {
             @Override
             public void run() {
@@ -149,7 +176,8 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
                 MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
             }
         };
-        Globals.makeGIF(static_instance, challenge_layouts, getViewChanges(), gifPath, callback);
+        GenerateGifFromBitmapsAsyncTask generateGifFromBitmapsAsyncTask = new GenerateGifFromBitmapsAsyncTask();
+        generateGifFromBitmapsAsyncTask.execute(new GenerateGifFromBitmapsAsyncTaskParams(bitmaps, gifPath, callback));
     }
 
     protected ViewUpdateCall[] getViewChanges() {
