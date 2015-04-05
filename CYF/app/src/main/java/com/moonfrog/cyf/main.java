@@ -99,26 +99,6 @@ public class main extends Activity {
                         }
                     });
 
-//                    for(int i = 0 ; i < Globals.hangman_challenge_categories.length; i++) {
-//                        Thread.sleep(500);
-//                        mProgressStatus = (int)(((float)i/(float)Globals.hangman_challenge_categories.length)*100);
-//                        mHandler.post(new Runnable() {
-//                            public void run() {
-//                                mProgress.setProgress(mProgressStatus);
-//                            }
-//                        });
-//
-//                        JSONArray list = word_list.getJSONArray(Globals.hangman_challenge_categories[i]);
-//                        ArrayList<String> strList = new ArrayList<>();
-//                        for(int j = 0, count = list.length(); j < count; j++) {
-//                            if( list.getString(j).length() < 15 ) {
-//                                strList.add(list.getString(j).toUpperCase());
-//                            }
-//                        }
-//                        Globals.hangman_challenge_category_word_list[i] = strList.toArray(new String[strList.size()]);
-//                        Arrays.sort(Globals.hangman_challenge_category_word_list[i]);
-//                    }
-
                     Intent intent = getIntent();
                     Intent targetIntent;
                     String word = "";

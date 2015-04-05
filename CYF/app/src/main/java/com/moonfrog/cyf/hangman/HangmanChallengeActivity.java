@@ -17,6 +17,13 @@ import com.moonfrog.cyf.view.ViewUpdateCall;
  * Created by srinath on 30/03/15.
  */
 public class HangmanChallengeActivity extends CategoryWordChallengeActivity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        challenge_fragment_class = HangmanChallengeFragment.class;
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     protected ViewUpdateCall[] getViewChanges() {
         ViewUpdateCall[] viewChanges = {

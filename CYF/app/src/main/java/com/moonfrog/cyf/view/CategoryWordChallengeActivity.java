@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
+import com.moonfrog.cyf.ChallengeChooseActivity;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
 
@@ -37,13 +39,15 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
     public static String selectedWord = "";
     public static String selectedTopic = "";
 
+    protected Class<? extends Fragment> challenge_fragment_class = null;
+
     protected int challenge_layouts[] = {
             R.layout.challenge_hangman_gif_1,
             R.layout.challenge_hangman_gif_2,
             R.layout.challenge_hangman_gif_3
     };
 
-    private CallbackManager callbackManager;
+    private CallbackManager callbackManager = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,8 +103,18 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
                 });
 
         if (savedInstanceState == null) {
+            if(challenge_fragment_class == null) {
+                challenge_fragment_class = CategoryWordChallengeFragment.class;
+            }
+            Fragment fragment = null;
+            try {
+                fragment = challenge_fragment_class.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CategoryWordChallengeFragment fragment = new CategoryWordChallengeFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
