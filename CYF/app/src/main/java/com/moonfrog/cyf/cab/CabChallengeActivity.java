@@ -23,7 +23,7 @@ public class CabChallengeActivity extends CategoryWordChallengeActivity {
     public void onCreate(Bundle savedInstanceState) {
         challenge_layouts = new int[] {
                 R.layout.challenge_hangman_gif_1,
-                R.layout.challenge_hangman_gif_2,
+                R.layout.challenge_cab_gif_2,
                 R.layout.challenge_hangman_gif_3
         };
         challenge_fragment_class = CabChallengeFragment.class;
