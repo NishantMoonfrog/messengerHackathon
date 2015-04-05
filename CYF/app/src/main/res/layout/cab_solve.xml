@@ -450,8 +450,7 @@
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:nestedScrollingEnabled="false" />
+                    android:layout_marginBottom="5dp" />
 
                 <Button
                     android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package com.moonfrog.cyf.cab;
 
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
+import com.moonfrog.cyf.hangman.HangmanChallengeFragment;
 import com.moonfrog.cyf.view.CategoryWordChallengeActivity;
 import com.moonfrog.cyf.view.LetterSpacingTextView;
 import com.moonfrog.cyf.view.ViewUpdateCall;
@@ -16,6 +18,18 @@ import com.moonfrog.cyf.view.ViewUpdateCall;
  * Created by srinath on 05/04/15.
  */
 public class CabChallengeActivity extends CategoryWordChallengeActivity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        challenge_layouts = new int[] {
+                R.layout.challenge_hangman_gif_1,
+                R.layout.challenge_hangman_gif_2,
+                R.layout.challenge_hangman_gif_3
+        };
+        challenge_fragment_class = CabChallengeFragment.class;
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     protected ViewUpdateCall[] getViewChanges() {
         ViewUpdateCall[] viewChanges = {
