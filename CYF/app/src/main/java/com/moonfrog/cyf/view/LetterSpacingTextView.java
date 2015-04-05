@@ -1,4 +1,4 @@
-package com.moonfrog.cyf;
+package com.moonfrog.cyf.view;
 
 /**
  * Created by srinath on 31/03/15.

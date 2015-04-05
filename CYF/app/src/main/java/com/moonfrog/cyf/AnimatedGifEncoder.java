@@ -1,12 +1,12 @@
 package com.moonfrog.cyf;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class AnimatedGifEncoder {
 

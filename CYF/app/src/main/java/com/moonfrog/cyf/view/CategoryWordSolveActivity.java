@@ -1,15 +1,11 @@
-package com.moonfrog.cyf;
+package com.moonfrog.cyf.view;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,26 +13,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Arrays;
-import com.facebook.messenger.MessengerThreadParams;
-import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
-import com.moonfrog.cyf.view.GenericPopup;
+import com.moonfrog.cyf.ChallengeChooseActivity;
+import com.moonfrog.cyf.Globals;
+import com.moonfrog.cyf.R;
+import com.moonfrog.cyf.main;
 
 import org.json.JSONObject;
 
-import java.util.List;
+import java.io.FileOutputStream;
+import java.util.Arrays;
 
 /**
  * Created by srinath on 31/03/15.
  */
-public class HangmanSolveActivity extends Activity {
-    public static HangmanSolveActivity static_instance = null;
+public class CategoryWordSolveActivity extends Activity {
+    public static CategoryWordSolveActivity static_instance = null;
     private boolean mPicking = false;
 
     private String current_status = "";
@@ -51,7 +45,7 @@ public class HangmanSolveActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hangman_solve);
+        setContentView(R.layout.category_word_solve);
         static_instance = this;
 
         Intent intent = getIntent();
@@ -261,8 +255,8 @@ public class HangmanSolveActivity extends Activity {
                             // if( mPicking ) {
                             //     MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
                             // }
-                            
-                            Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
+
+                            Intent intent = new Intent(CategoryWordSolveActivity.this, ChallengeChooseActivity.class);
                             startActivity(intent);
                             finish();
                         }

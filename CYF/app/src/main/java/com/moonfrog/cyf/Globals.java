@@ -1,35 +1,27 @@
 package com.moonfrog.cyf;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
+import com.moonfrog.cyf.view.ViewUpdateCall;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.security.Key;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
-
-import com.moonfrog.cyf.AnimatedGifEncoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -39,33 +31,7 @@ public class Globals {
     private static String key = "nishant__srinath";
     public static String name = "";
 
-
-    public static String[] hangman_challenge_categories = {
-            "Countries",
-            "Animals",
-            "Cities",
-            "Movies",
-            "Sports",
-            "Games"
-    };
-
-    public static String[] hangman_challenge_categories_singular = {
-            "Country",
-            "Animal",
-            "City",
-            "Movie",
-            "Sports",
-            "Game"
-    };
-
-    public static String[][] hangman_challenge_category_word_list = {
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
-    };
+    public static JSONObject word_list;
 
     public static String encrypt(String text) {
       try {
@@ -146,6 +112,26 @@ public class Globals {
         return low + 1;
     }
 
+    public static int findStartIndex(JSONArray array, String searchText) throws JSONException {
+        int low = 0, high = array.length() - 1, mid;
+        if( high < 0 ) {
+            return 0;
+        }
+
+        while(low < high) {
+            mid = (low + high) / 2;
+            if( array.getString(mid).compareToIgnoreCase(searchText) < 0 ) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        if( array.getString(low).toLowerCase().startsWith(searchText) ) {
+            return low;
+        }
+        return low + 1;
+    }
+
     public static int findEndIndex(String[] array, String searchText) {
         int low = 0, high = array.length - 1, mid;
         if( high < 0 ) {
@@ -167,11 +153,41 @@ public class Globals {
         return -1;
     }
 
+    public static int findEndIndex(JSONArray array, String searchText) throws JSONException {
+        int low = 0, high = array.length() - 1, mid;
+        if( high < 0 ) {
+            return -1;
+        }
+
+        while(low < high) {
+            mid = (low + high + 1) / 2;
+            if( array.getString(mid).toLowerCase().startsWith(searchText) || array.getString(mid).compareToIgnoreCase(searchText) < 0 ) {
+                low = mid;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        if( array.getString(low).toLowerCase().startsWith(searchText) ) {
+            return low;
+        }
+        return -1;
+    }
+
     public static ArrayList<String> getFilteredList(String[] array, String searchText) {
         ArrayList<String> sliderMenu = new ArrayList<>();
 
         for (int i = findStartIndex(array, searchText), last = findEndIndex(array, searchText) ; i <= last ; i++) {
             sliderMenu.add(array[i]);
+        }
+        return sliderMenu;
+    }
+
+    public static ArrayList<String> getFilteredList(JSONArray array, String searchText) throws JSONException {
+        ArrayList<String> sliderMenu = new ArrayList<>();
+
+        for (int i = findStartIndex(array, searchText), last = findEndIndex(array, searchText) ; i <= last ; i++) {
+            sliderMenu.add(array.getString(i));
         }
         return sliderMenu;
     }
@@ -184,8 +200,6 @@ public class Globals {
 
             final View v = layoutInflater.inflate(ids[i], null);
             viewChanges[i].updateView(v);
-
-            final int idx = i;
 
             final ViewGroup current = (ViewGroup) owner.getWindow().getDecorView().getRootView();
             current.addView(v, i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));

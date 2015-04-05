@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.moonfrog.cyf.cab.CabChallengeActivity;
+import com.moonfrog.cyf.hangman.HangmanChallengeActivity;
+import com.moonfrog.cyf.view.ListAdapter;
+
 import java.util.ArrayList;
 
 /**
@@ -53,6 +57,7 @@ public class ChallengeChooseActivity extends Activity {
                         intent = new Intent(ChallengeChooseActivity.this,  HangmanChallengeActivity.class);
                         break;
                     case 1:
+                        intent = new Intent(ChallengeChooseActivity.this,  CabChallengeActivity.class);
                         break;
                     default:
                         break;

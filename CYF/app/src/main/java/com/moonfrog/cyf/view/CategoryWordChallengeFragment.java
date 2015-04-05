@@ -1,4 +1,4 @@
-package com.moonfrog.cyf;
+package com.moonfrog.cyf.view;
 
 /**
  * Created by srinath on 31/03/15.
@@ -21,49 +21,65 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.facebook.login.LoginManager;
-import com.moonfrog.cyf.view.SlidingTabLayout;
+import com.moonfrog.cyf.Globals;
+import com.moonfrog.cyf.R;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import com.moonfrog.cyf.ViewUpdateCall;
 
-public class HangmanChallengeFragment extends Fragment {
+public class CategoryWordChallengeFragment extends Fragment {
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
     private String searchText = "";
 
+    protected String[] challenge_categories = {
+            "Default Category 1",
+            "Default Category 2"
+    };
+
+    protected String[] challenge_categories_singular = {
+            "Def Cat 1",
+            "Def Cat 2"
+    };
+
+    protected JSONObject challenge_word_list = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.hangman_challenge_fragment, container, false);
+        if(challenge_word_list == null) {
+            try {
+                challenge_word_list = Globals.word_list.getJSONObject("default");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return inflater.inflate(R.layout.category_word_challenge_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        final HangmanChallengePageAdapter adp = new HangmanChallengePageAdapter();
-        adp.listViewStore = new ListView[Globals.hangman_challenge_categories.length];
+        final CategoryWordChallengePageAdapter adp = new CategoryWordChallengePageAdapter();
+        adp.listViewStore = new ListView[challenge_categories.length];
         adp.listContext = getActivity().getBaseContext();
         mViewPager.setAdapter(adp);
 
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
 
-        final HangmanChallengeFragment _this = this;
+        final CategoryWordChallengeFragment _this = this;
         class CustomPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 adp.currentPosition = position;
-                adp.updateWithSearchText(searchText);
+                try {
+                    adp.updateWithSearchText(searchText);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
         mSlidingTabLayout.setOnPageChangeListener(new CustomPageChangeListener());
@@ -73,7 +89,11 @@ public class HangmanChallengeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 searchText = cs.toString().toLowerCase();
-                adp.updateWithSearchText(searchText);
+                try {
+                    adp.updateWithSearchText(searchText);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -90,13 +110,13 @@ public class HangmanChallengeFragment extends Fragment {
     }
 
 
-    class HangmanChallengePageAdapter extends PagerAdapter {
+    class CategoryWordChallengePageAdapter extends PagerAdapter {
         public ListView[] listViewStore;
         Context listContext;
         int currentPosition = 0;
         @Override
         public int getCount() {
-            return Globals.hangman_challenge_categories.length;
+            return challenge_categories.length;
         }
 
         @Override
@@ -106,18 +126,24 @@ public class HangmanChallengeFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return Globals.hangman_challenge_categories[position].toUpperCase();
+            return challenge_categories[position].toUpperCase();
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             // Inflate a new layout from our resources
-            final HangmanChallengeActivity currentActivity = (HangmanChallengeActivity) getActivity();
-            View view = currentActivity.getLayoutInflater().inflate(R.layout.hangman_challenge_pager_item, container, false);
+            final CategoryWordChallengeActivity currentActivity = (CategoryWordChallengeActivity) getActivity();
+            View view = currentActivity.getLayoutInflater().inflate(R.layout.category_word_challenge_pager_item, container, false);
             container.addView(view);
 
-            final ListView listView = (ListView) view.findViewById(R.id.hangman_category_select);
-            ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.simplerow, Globals.getFilteredList(Globals.hangman_challenge_category_word_list[currentPosition], searchText));
+            final ListView listView = (ListView) view.findViewById(R.id.category_word_category_select);
+
+            ArrayAdapter<String> mAdapter = null;
+            try {
+                mAdapter = new ArrayAdapter<>(getActivity().getBaseContext(), R.layout.simplerow, Globals.getFilteredList(challenge_word_list.getJSONArray(challenge_categories[position]), searchText));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             listView.setAdapter(mAdapter);
             listViewStore[position] = listView;
 
@@ -125,11 +151,15 @@ public class HangmanChallengeFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int inner_position, long id) {
-                    currentActivity.selectedWord = Globals.hangman_challenge_category_word_list[position][inner_position];
-                    currentActivity.selectedTopic = Globals.hangman_challenge_categories_singular[position];
+                    try {
+                        currentActivity.selectedWord = challenge_word_list.getJSONArray(challenge_categories[position]).getString(inner_position);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    currentActivity.selectedTopic = challenge_categories_singular[position];
 
                     if( Globals.name == "" ) {
-                        ArrayList<String> permissions = new ArrayList<String>();
+                        ArrayList<String> permissions = new ArrayList<>();
                         permissions.add("public_profile");
                         LoginManager.getInstance().logInWithReadPermissions(currentActivity, permissions);
                     } else {
@@ -146,10 +176,10 @@ public class HangmanChallengeFragment extends Fragment {
             container.removeView((View) object);
         }
 
-        public void updateWithSearchText(String text) {
+        public void updateWithSearchText(String text) throws JSONException {
             ListView listView = listViewStore[currentPosition];
             Log.e("updating ", text + " " + (getActivity().getBaseContext() == null ? 1 : 0));
-            ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(listContext, R.layout.simplerow, Globals.getFilteredList(Globals.hangman_challenge_category_word_list[currentPosition], searchText));
+            ArrayAdapter<String> mAdapter = new ArrayAdapter<>(listContext, R.layout.simplerow, Globals.getFilteredList(challenge_word_list.getJSONArray(challenge_categories[currentPosition]), searchText));
             listView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }

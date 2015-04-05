@@ -24,7 +24,7 @@
             android:label="@string/choose_challenge" >
         </activity>
         <activity
-            android:name=".HangmanChallengeActivity"
+            android:name=".hangman.HangmanChallengeActivity"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/hangman_challenge" >
             <intent-filter>
@@ -34,7 +34,7 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name=".HangmanSolveActivity"
+            android:name=".hangman.HangmanSolveActivity"
             android:label="@string/hangman_solve_title" >
         </activity>
         <activity android:name="com.facebook.FacebookActivity"
