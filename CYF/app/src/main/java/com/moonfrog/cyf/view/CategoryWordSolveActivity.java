@@ -84,36 +84,6 @@ abstract public class CategoryWordSolveActivity extends Activity {
                     LayoutInflater layoutInflater = (LayoutInflater) static_instance.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View v = layoutInflater.inflate(R.layout.win_hangman, null);
 
-                    ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
-
-                    int id = R.drawable.hangman_0;
-                    switch(num_wrong_choices) {
-                        case 1:
-                            id = R.drawable.hangman_1;
-                            break;
-                        case 2:
-                            id = R.drawable.hangman_2;
-                            break;
-                        case 3:
-                            id = R.drawable.hangman_3;
-                            break;
-                        case 4:
-                            id = R.drawable.hangman_4;
-                            break;
-                        case 5:
-                            id = R.drawable.hangman_5;
-                            break;
-                        case 6:
-                            id = R.drawable.hangman_6;
-                            break;
-                        case 7:
-                            id = R.drawable.hangman_7;
-                            break;
-                    }
-
-
-                    imageView.setImageDrawable(getResources().getDrawable(id));
-
                     TextView tv = new TextView(static_instance);
                     String text = "I cracked " + challengerName + "'s challenge in " + (num_wrong_choices+1) + " turns!";
                     tv.setPadding(0, 10, 0, 0);

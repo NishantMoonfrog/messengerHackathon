@@ -16,6 +16,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
+import com.moonfrog.cyf.cab.CabSolveActivity;
 import com.moonfrog.cyf.hangman.HangmanSolveActivity;
 
 import org.json.JSONArray;
@@ -104,12 +105,18 @@ public class main extends Activity {
                     String word = "";
                     if (Intent.ACTION_PICK.equals(intent.getAction())) {
                         MessengerThreadParams mThreadParams = MessengerUtils.getMessengerThreadParamsForIntent(intent);
-                        String challengerName = "";
-                        String metadata = mThreadParams.metadata;
+                        String challengerName = "", type = "hangman", metadata = mThreadParams.metadata;
+                        int n_char = 5;
                         try {
                             JSONObject jsonObj = new JSONObject(metadata);
                             word = jsonObj.get("word").toString();
                             challengerName = jsonObj.get("name").toString();
+                            if(jsonObj.has("type")) {
+                                type = jsonObj.get("type").toString();
+                            }
+                            if(jsonObj.has("n_char")) {
+                                n_char = jsonObj.getInt("n_char");
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -120,10 +127,16 @@ public class main extends Activity {
                         Bundle params = new Bundle();
                         params.putString("final_word", final_word);
                         params.putBoolean("mPicking", true);
+                        params.putInt("n_char", n_char);
                         params.putString("challengerName", challengerName);
                         // params.putStringArray("participantIds", (String[])participantIds.toArray());
 
-                        targetIntent = new Intent(main.this, HangmanSolveActivity.class);
+                        if(type.equals("caf")) {
+                            targetIntent = new Intent(main.this, CabSolveActivity.class);
+                        } else {
+                            targetIntent = new Intent(main.this, HangmanSolveActivity.class);
+                        }
+
                         targetIntent.putExtras(params);
                     } else {
                         targetIntent = new Intent(main.this, ChallengeChooseActivity.class);

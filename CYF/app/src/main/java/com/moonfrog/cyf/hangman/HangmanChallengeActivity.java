@@ -1,17 +1,22 @@
 package com.moonfrog.cyf.hangman;
 
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
 import com.moonfrog.cyf.view.CategoryWordChallengeActivity;
 import com.moonfrog.cyf.view.LetterSpacingTextView;
 import com.moonfrog.cyf.view.ViewUpdateCall;
+
+import org.json.JSONObject;
 
 /**
  * Created by srinath on 30/03/15.
@@ -73,5 +78,23 @@ public class HangmanChallengeActivity extends CategoryWordChallengeActivity {
                 }
         };
         return viewChanges;
+    }
+
+    @Override
+    protected void shareChallenge(String gifPath) {
+        String metadata = "";
+        try {
+            JSONObject metadataJson = new JSONObject();
+            metadataJson.put("word", Globals.encrypt(selectedWord));
+            metadataJson.put("name", Globals.name);
+            metadata = metadataJson.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Uri contentUri = ((new Uri.Builder()).scheme("file").appendPath(gifPath)).build();
+        ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/gif").setMetaData(metadata).build();
+
+        MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
     }
 }

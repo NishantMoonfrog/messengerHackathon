@@ -40,10 +40,11 @@ import java.util.ArrayList;
 /**
  * Created by srinath on 30/03/15.
  */
-public class CategoryWordChallengeActivity extends FragmentActivity {
+abstract public class CategoryWordChallengeActivity extends FragmentActivity {
     public static CategoryWordChallengeActivity static_instance = null;
     public static String selectedWord = "";
     public static String selectedTopic = "";
+    public static int selectedPosition = 0;
 
     protected Class<? extends Fragment> challenge_fragment_class = null;
 
@@ -160,25 +161,15 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
         Runnable callback = new Runnable() {
             @Override
             public void run() {
-                String metadata = "";
-                try {
-                    JSONObject metadataJson = new JSONObject();
-                    metadataJson.put("word", Globals.encrypt(selectedWord));
-                    metadataJson.put("name", Globals.name);
-                    metadata = metadataJson.toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                Uri contentUri = ((new Uri.Builder()).scheme("file").appendPath(gifPath)).build();
-                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/gif").setMetaData(metadata).build();
-
-                MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
+                shareChallenge(gifPath);
             }
         };
         GenerateGifFromBitmapsAsyncTask generateGifFromBitmapsAsyncTask = new GenerateGifFromBitmapsAsyncTask();
         generateGifFromBitmapsAsyncTask.execute(new GenerateGifFromBitmapsAsyncTaskParams(bitmaps, gifPath, callback));
     }
+
+    // Override!
+    abstract protected void shareChallenge(String gifPath);
 
     protected ViewUpdateCall[] getViewChanges() {
         ViewUpdateCall[] viewChanges = {

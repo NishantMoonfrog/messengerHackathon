@@ -151,6 +151,7 @@ public class CategoryWordChallengeFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int inner_position, long id) {
+                    currentActivity.selectedPosition = position;
                     try {
                         currentActivity.selectedWord = challenge_word_list.getJSONArray(challenge_categories[position]).getString(inner_position);
                     } catch (JSONException e) {
