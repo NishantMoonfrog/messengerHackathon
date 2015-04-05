@@ -1,17 +1,13 @@
 package com.moonfrog.cyf.view;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -23,7 +19,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
-import com.moonfrog.cyf.ChallengeChooseActivity;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
 
@@ -42,8 +37,6 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
     protected Class<? extends Fragment> challenge_fragment_class = null;
 
     protected int challenge_layouts[] = {
-            R.layout.challenge_hangman_gif_1,
-            R.layout.challenge_hangman_gif_2,
             R.layout.challenge_hangman_gif_3
     };
 
@@ -161,14 +154,6 @@ public class CategoryWordChallengeActivity extends FragmentActivity {
 
     protected ViewUpdateCall[] getViewChanges() {
         ViewUpdateCall[] viewChanges = {
-                new ViewUpdateCall() {
-                    @Override
-                    public void updateView(View v) {}
-                },
-                new ViewUpdateCall() {
-                    @Override
-                    public void updateView(View v) {}
-                },
                 new ViewUpdateCall() {
                     @Override
                     public void updateView(View v) {}

@@ -29,49 +29,30 @@ import java.util.Arrays;
 /**
  * Created by srinath on 31/03/15.
  */
-public class CategoryWordSolveActivity extends Activity {
+abstract public class CategoryWordSolveActivity extends Activity {
     public static CategoryWordSolveActivity static_instance = null;
-    private boolean mPicking = false;
 
-    private String current_status = "";
-    private String final_word = "";
-    private String tried_characters = "";
-    private String challengerName = "";
-    private int num_wrong_choices = 0;
-    private boolean completed = false;
+    protected int solve_layout = -1;
 
-    private String[] participantIds;
+    protected String current_status = "";
+    protected String final_word = "";
+    protected String tried_characters = "";
+    protected String challengerName = "";
+    protected int num_wrong_choices = 0;
+    protected boolean completed = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.category_word_solve);
         static_instance = this;
+        super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
-        challengerName = extras.getString("challengerName", "");
-        final_word = extras.getString("final_word", "");
-        mPicking = extras.getBoolean("mPicking", false);
-        // participantIds = extras.getStringArray("participantIds");
+        if(solve_layout == -1) {
+            solve_layout = R.layout.category_word_solve;
+        }
+        setContentView(solve_layout);
 
-/*        String word = "";
-        if (Intent.ACTION_PICK.equals(intent.getAction())) {
-            mPicking = true;
-            MessengerThreadParams mThreadParams = MessengerUtils.getMessengerThreadParamsForIntent(intent);
-
-            String metadata = mThreadParams.metadata;
-            try {
-                JSONObject jsonObj = new JSONObject(metadata);
-                word = jsonObj.get("word").toString();
-                challengerName = jsonObj.get("name").toString();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            final_word = Globals.decrypt(word);
-            List<String> participantIds = mThreadParams.participants;
-            final_word.toUpperCase();
-        }*/
+        challengerName = getIntent().getExtras().getString("challengerName", "");
+        final_word = getIntent().getExtras().getString("final_word", "");
 
         if(current_status.equals("")) {
             current_status = final_word.replaceAll("[A-Z]", "_");
@@ -80,30 +61,7 @@ public class CategoryWordSolveActivity extends Activity {
         updateStatus();
     }
 
-    public void onCharButtonClick(View v) {
-        Button button = (Button)v;
-        String button_text = (button.getText()).toString();
-
-        if(!tried_characters.contains(button_text)) {
-            tried_characters = tried_characters + button_text;
-            char[] chars = tried_characters.toCharArray();
-            Arrays.sort(chars);
-            tried_characters = new String(chars);
-            String regex = "[A-Z]";
-            if(tried_characters.length()>0) {
-                regex = "[A-Z&&[^" + tried_characters + "]]";
-            }
-            current_status = final_word.replaceAll(regex, "_");
-            button.setEnabled(false);
-
-            if(!final_word.contains(button_text)) {
-                num_wrong_choices++;
-            } else if(current_status.equals(final_word)) {
-                completed = true;
-            }
-        }
-        updateStatus();
-    }
+    abstract public void onCharButtonClick(View v);
 
     public void updateStatus() {
         LinearLayout ll = (LinearLayout) findViewById(R.id.current_status);
@@ -205,10 +163,6 @@ public class CategoryWordSolveActivity extends Activity {
                             finish();
                         }
                     });
-
-                    // On completion do this:
-                    // Intent intent = new Intent(HangmanSolveActivity.this, ChallengeChooseActivity.class);
-                    // startActivity(intent);
                 }
             });
             winPopup.show();
@@ -246,16 +200,6 @@ public class CategoryWordSolveActivity extends Activity {
                     losePopup.setOnPopupCloseListener(new GenericPopup.OnPopupCloseListener() {
                         @Override
                         public void OnClose(GenericPopup popup) {
-                            // NISHANT: Add share Code here...
-
-                            // ShareToMessengerParams shareToMessengerParams =
-                            //         ShareToMessengerParams.newBuilder(Uri.fromFile(new File("/sdcard/Downloads/img.jpg")), "image/jpeg")
-                            //                 .build();
-
-                            // if( mPicking ) {
-                            //     MessengerUtils.finishShareToMessenger(static_instance, shareToMessengerParams);
-                            // }
-
                             Intent intent = new Intent(CategoryWordSolveActivity.this, ChallengeChooseActivity.class);
                             startActivity(intent);
                             finish();
