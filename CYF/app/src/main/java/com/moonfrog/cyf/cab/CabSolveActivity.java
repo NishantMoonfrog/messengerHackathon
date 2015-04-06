@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,12 +20,10 @@ import com.moonfrog.cyf.R;
 import com.moonfrog.cyf.main;
 import com.moonfrog.cyf.view.CategoryWordSolveActivity;
 import com.moonfrog.cyf.view.GenericPopup;
-import com.moonfrog.cyf.view.LetterSpacingTextView;
 
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
-import java.util.Arrays;
 
 /**
  * Created by srinath on 05/04/15.
@@ -55,24 +52,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
             num_wrong_choices++;
         }
 
-        LinearLayout button_group_main = (LinearLayout)this.findViewById(R.id.char_button_layout);
-        int childcount = button_group_main.getChildCount();
-        for (int i=0; i < childcount; i++){
-            View child = button_group_main.getChildAt(i);
-            if(child instanceof LinearLayout) {
-                LinearLayout button_group_sub = (LinearLayout)child;
-
-                int childchildcount = button_group_sub.getChildCount();
-                for(int j=0; j < childchildcount; j++) {
-                    View childchild = button_group_sub.getChildAt(j);
-                    if(childchild instanceof Button) {
-                        if((childchild).hasOnClickListeners()) {
-                            (childchild).setEnabled(true);
-                        }
-                    }
-                }
-            }
-        }
+        disableCharButtons();
 
         updateStatus();
     }
@@ -85,10 +65,79 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
         current_guess_status = current_guess_status + button_text;
         button.setEnabled(false);
 
+        updateButtons();
+    }
+
+    public void onBackButtonPressed(View v) {
+        String new_guess = "";
+        //remove last word from
+        for(int i = 0; i < current_guess_status.length() - 1; i++) {
+            new_guess += current_guess_status.charAt(i);
+        }
+        setButtonEnabledStateForString("" + current_guess_status.charAt(current_guess_status.length() - 1), true);
+        current_guess_status = new_guess;
+        updateButtons();
+    }
+
+    public void updateButtons() {
+        if(current_guess_status.length() < 1 ) {
+            (this.findViewById(R.id.button_back)).setEnabled(false);
+        }
+
         if(current_guess_status.length() == current_challenge_length) {
             (this.findViewById(R.id.guess_button)).setEnabled(true);
+            disableCharButtons();
         }
+
+        if(current_guess_status.length() >=1 ) {
+            (this.findViewById(R.id.button_back)).setEnabled(true);
+        }
+
         ((Button)findViewById(R.id.guess_button)).setText("GUESS " + current_guess_status);
+    }
+
+    public void disableCharButtons() {
+        LinearLayout button_group_main = (LinearLayout)this.findViewById(R.id.char_button_layout);
+        int childcount = button_group_main.getChildCount();
+        for (int i=0; i < childcount; i++){
+            View child = button_group_main.getChildAt(i);
+            if(child instanceof LinearLayout) {
+                LinearLayout button_group_sub = (LinearLayout)child;
+
+                int childchildcount = button_group_sub.getChildCount();
+                for(int j=0; j < childchildcount; j++) {
+                    View childchild = button_group_sub.getChildAt(j);
+                    if(childchild instanceof Button) {
+                        String button_content = (((Button)childchild).getText()).toString();
+                        if((childchild).hasOnClickListeners() && !button_content.contains("←")) {
+                            (childchild).setEnabled(false);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void setButtonEnabledStateForString(String button_string, boolean enable) {
+        LinearLayout button_group_main = (LinearLayout)this.findViewById(R.id.char_button_layout);
+        int childcount = button_group_main.getChildCount();
+        for (int i=0; i < childcount; i++){
+            View child = button_group_main.getChildAt(i);
+            if(child instanceof LinearLayout) {
+                LinearLayout button_group_sub = (LinearLayout)child;
+
+                int childchildcount = button_group_sub.getChildCount();
+                for(int j=0; j < childchildcount; j++) {
+                    View childchild = button_group_sub.getChildAt(j);
+                    if(childchild instanceof Button) {
+                        String button_content = (((Button)childchild).getText()).toString();
+                        if((childchild).hasOnClickListeners() && button_content.equals(button_string)) {
+                            (childchild).setEnabled(enable);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -128,18 +177,11 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
                 public void OnClose(GenericPopup popup) {
                     // NISHANT: Add share Code here...
                     LayoutInflater layoutInflater = (LayoutInflater) static_instance.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View v = layoutInflater.inflate(R.layout.win_hangman, null);
+                    final View v = layoutInflater.inflate(R.layout.win_cab, null);
 
-                    TextView tv = new TextView(static_instance);
-                    String text = "I cracked " + challengerName + "'s challenge in " + (num_wrong_choices+1) + " turns!";
-                    tv.setPadding(0, 10, 0, 0);
+                    TextView tv = (TextView) v.findViewById(R.id.bragText);
+                    String text = "I cracked\n" + challengerName + "'s challenge\nin " + (num_wrong_choices+1) + " turns!";
                     tv.setText(text);
-                    tv.setTextSize(40);
-                    tv.setGravity(Gravity.CENTER);
-                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    LinearLayout ll = (LinearLayout) v.findViewById(R.id.win_view);
-                    ll.addView(tv);
 
                     final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
                     current.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
@@ -150,7 +192,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
                             Bitmap image = Globals.getBitmapFromView(v);
                             current.removeView(v);
 
-                            String pngPath = "/sdcard/cyfTemp/" + "win_hangman.png";
+                            String pngPath = "/sdcard/cyfTemp/" + "win_cab.png";
                             try{
                                 FileOutputStream outStream = new FileOutputStream(pngPath);
                                 image.compress(Bitmap.CompressFormat.PNG, 100, outStream);

@@ -75,24 +75,29 @@
                 </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Make Guess"
-            android:id="@+id/guess_button"
-            android:layout_gravity="bottom"
-            android:textStyle="bold"
-            android:textSize="36dp"
-            android:background="#ffff9959"
-            android:onClick="onGuessButtonClick" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:weightSum="1"
-            android:id="@+id/char_button_layout">
+            android:id="@+id/char_button_layout"
+            android:background="#ff147ba0">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Make Guess"
+                android:id="@+id/guess_button"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="36dp"
+                android:background="#ffff9959"
+                android:onClick="onGuessButtonClick"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -541,17 +546,19 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="A"
-                    android:id="@+id/button_unused_2"
+                    android:text="←"
+                    android:id="@+id/button_back"
                     android:layout_weight="0.142"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:background="#ffffc506"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:textSize="25dp"
+                    android:textSize="40dp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp" />
+                    android:layout_marginBottom="5dp"
+                    android:onClick="onBackButtonPressed"
+                    android:gravity="center" />
 
             </LinearLayout>
         </LinearLayout>

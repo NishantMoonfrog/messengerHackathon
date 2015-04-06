@@ -84,16 +84,9 @@ abstract public class CategoryWordSolveActivity extends Activity {
                     LayoutInflater layoutInflater = (LayoutInflater) static_instance.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View v = layoutInflater.inflate(R.layout.win_hangman, null);
 
-                    TextView tv = new TextView(static_instance);
-                    String text = "I cracked " + challengerName + "'s challenge in " + (num_wrong_choices+1) + " turns!";
-                    tv.setPadding(0, 10, 0, 0);
+                    TextView tv = (TextView) v.findViewById(R.id.bragText);
+                    String text = "I cracked\n" + challengerName + "'s challenge\nin " + (num_wrong_choices+1) + " turns!";
                     tv.setText(text);
-                    tv.setTextSize(40);
-                    tv.setGravity(Gravity.CENTER);
-                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    LinearLayout ll = (LinearLayout) v.findViewById(R.id.win_view);
-                    ll.addView(tv);
 
                     final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
                     current.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));

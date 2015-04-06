@@ -16,8 +16,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@drawable/hangman"
-        android:layout_weight="0.95"
-        android:minHeight="150dp"
-        android:minWidth="150dp" />
+        android:minWidth="110dp"
+        android:minHeight="110dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I cracked\nSrinath's challenge\nin 3 turns!"
+        android:id="@+id/bragText"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="#ff0d0d0d"
+        android:textSize="26dp"
+        android:paddingTop="0dp"
+        android:gravity="center" />
 
 </com.moonfrog.cyf.view.FixedSizeSquareLayout>
