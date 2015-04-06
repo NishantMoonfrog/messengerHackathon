@@ -53,27 +53,14 @@ public class HangmanChallengeActivity extends CategoryWordChallengeActivity {
                 new ViewUpdateCall() {
                     @Override
                     public void updateView(View v) {
-                        LinearLayout ll = (LinearLayout) v.findViewById(R.id.dashLayout);
-
-                        LetterSpacingTextView tv = new LetterSpacingTextView(static_instance);
+                        LetterSpacingTextView tv = (LetterSpacingTextView) v.findViewById(R.id.challengeWord);
                         tv.setLetterSpacing_(12); //Or any float. To reset to normal, use 0 or LetterSpacingTextView.Spacing.NORMAL
                         String current_status = selectedWord.replaceAll("[A-Z]", "_");
                         tv.setText(current_status);
-                        tv.setTextSize(30);
-                        tv.setTypeface(Typeface.DEFAULT_BOLD);
-                        tv.setGravity(Gravity.CENTER);
-                        tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                        TextView tv2 = new TextView(static_instance);
-                        String text = "Guess the " + selectedTopic + "?";
-                        tv2.setPadding(0, 10, 0, 0);
+                        TextView tv2 = (TextView) v.findViewById(R.id.questionText);
+                        String text = "Guess the\n" + selectedTopic + "!";
                         tv2.setText(text);
-                        tv2.setTextSize(30);
-                        tv2.setGravity(Gravity.CENTER);
-                        tv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                        ll.addView(tv);
-                        ll.addView(tv2);
                     }
                 }
         };
