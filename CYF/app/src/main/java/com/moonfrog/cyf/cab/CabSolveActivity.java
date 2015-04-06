@@ -88,7 +88,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
         if(current_guess_status.length() == current_challenge_length) {
             (this.findViewById(R.id.guess_button)).setEnabled(true);
         }
-        ((Button)findViewById(R.id.guess_button)).setText("GUESS" + current_guess_status);
+        ((Button)findViewById(R.id.guess_button)).setText("GUESS " + current_guess_status);
     }
 
     @Override
