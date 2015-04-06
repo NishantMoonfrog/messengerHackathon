@@ -17,7 +17,6 @@
         android:src="@drawable/hangman_bg"
         android:longClickable="false"
         android:scaleType="centerInside"
-        android:nestedScrollingEnabled="false"
         android:maxWidth="120dp"
         android:maxHeight="120dp" />
 
