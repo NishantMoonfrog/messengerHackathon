@@ -114,8 +114,8 @@ public class main extends Activity {
                             if(jsonObj.has("type")) {
                                 type = jsonObj.get("type").toString();
                             }
-                            if(jsonObj.has("n_char")) {
-                                n_char = jsonObj.getInt("n_char");
+                            if(jsonObj.has("nchar")) {
+                                n_char = jsonObj.getInt("nchar");
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

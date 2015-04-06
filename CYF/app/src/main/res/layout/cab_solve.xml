@@ -75,6 +75,17 @@
                 </LinearLayout>
         </LinearLayout>
 
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Make Guess"
+            android:id="@+id/guess_button"
+            android:layout_gravity="bottom"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:background="#ffff9959"
+            android:onClick="onGuessButtonClick" />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -544,17 +555,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Make Guess"
-            android:id="@+id/guess_button"
-            android:layout_gravity="bottom"
-            android:textStyle="bold"
-            android:textSize="36dp"
-            android:background="#ffff9959"
-            android:onClick="onGuessButtonClick" />
 
     </LinearLayout>
 

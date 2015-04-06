@@ -47,6 +47,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
     public void onGuessButtonClick(View v) {
         Button button = (Button)v;
         v.setEnabled(false);
+        ((Button)v).setText("GUESS");
         //re-enable all buttons again :)
         if(current_guess_status.equals(final_word)) {
             completed = true;
@@ -87,6 +88,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
         if(current_guess_status.length() == current_challenge_length) {
             (this.findViewById(R.id.guess_button)).setEnabled(true);
         }
+        ((Button)findViewById(R.id.guess_button)).setText("GUESS" + current_guess_status);
     }
 
     @Override
