@@ -18,6 +18,7 @@ import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.cab.CabSolveActivity;
 import com.moonfrog.cyf.hangman.HangmanSolveActivity;
+import com.moonfrog.cyf.puzzles.PuzzleSolveActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -109,7 +110,7 @@ public class main extends Activity {
                         int n_char = 5;
                         try {
                             JSONObject jsonObj = new JSONObject(metadata);
-                            word = jsonObj.get("word").toString();
+                            word = jsonObj.get("challenge").toString();
                             challengerName = jsonObj.get("name").toString();
                             if(jsonObj.has("type")) {
                                 type = jsonObj.get("type").toString();
@@ -125,7 +126,7 @@ public class main extends Activity {
                         final_word.toUpperCase();
 
                         Bundle params = new Bundle();
-                        params.putString("final_word", final_word);
+                        params.putString("challenge", final_word);
                         params.putBoolean("mPicking", true);
                         params.putInt("n_char", n_char);
                         params.putString("challengerName", challengerName);
@@ -133,8 +134,10 @@ public class main extends Activity {
 
                         if(type.equals("caf")) {
                             targetIntent = new Intent(main.this, CabSolveActivity.class);
-                        } else {
+                        } else if ( type.equals("hangman") ) {
                             targetIntent = new Intent(main.this, HangmanSolveActivity.class);
+                        } else {
+                            targetIntent = new Intent(main.this, PuzzleSolveActivity.class);
                         }
 
                         targetIntent.putExtras(params);

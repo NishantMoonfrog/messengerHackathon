@@ -86,7 +86,7 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
                                         name = name.split(" ")[0];
 
                                         Globals.name = name;
-                                        static_instance.challengeFriends();
+                                        Globals.challengeFriends(getBaseContext(), challenge_layouts, getViewChanges(), shareChallenge);
                                     }
                                 });
                         Bundle parameters = new Bundle();
@@ -131,45 +131,7 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void challengeFriends() {
-        final String path = "/sdcard/cyfTemp/";
-        File folder = new File(path);
-        if (!folder.exists()) {
-            if( !folder.mkdirs() ) {
-                Log.e("Couldn't create folder ", path);
-                return;
-            }
-        }
-
-        final ArrayList< Bitmap > bitmaps = new ArrayList<>();
-        for(int i = 0 ; i < challenge_layouts.length ; i++) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View v = layoutInflater.inflate(challenge_layouts[i], null);
-            getViewChanges()[i].updateView(v);
-            if (v.getMeasuredHeight() <= 0) {
-                v.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            }
-            Bitmap image = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(image);
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-            v.draw(c);
-            bitmaps.add(image);
-        }
-
-        final String gifPath = path + "challenge.gif";
-
-        Runnable callback = new Runnable() {
-            @Override
-            public void run() {
-                shareChallenge(gifPath);
-            }
-        };
-        GenerateGifFromBitmapsAsyncTask generateGifFromBitmapsAsyncTask = new GenerateGifFromBitmapsAsyncTask();
-        generateGifFromBitmapsAsyncTask.execute(new GenerateGifFromBitmapsAsyncTaskParams(bitmaps, gifPath, callback));
-    }
-
-    // Override!
-    abstract protected void shareChallenge(String gifPath);
+    protected Runnable shareChallenge;
 
     protected ViewUpdateCall[] getViewChanges() {
         ViewUpdateCall[] viewChanges = {

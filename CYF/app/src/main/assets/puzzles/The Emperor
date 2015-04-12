@@ -1,0 +1,31 @@
+You are the ruler of a medieval empire and you are about to have a celebration tomorrow. The celebration is the most important party you have ever hosted. You've got 1000 bottles of wine you were planning to open for the celebration, but you find out that one of them is poisoned.
+
+The poison exhibits no symptoms until death. Death occurs within ten to twenty hours after consuming even the minutest amount of poison.
+
+You have over a thousand slaves at your disposal and just under 24 hours to determine which single bottle is poisoned.
+
+You have a handful of prisoners about to be executed, and it would mar your celebration to have anyone else killed.
+
+What is the smallest number of prisoners you must have to drink from the bottles to be absolutely sure to find the poisoned bottle within 24 hours?
+<!!Separator!!>
+10
+<!!Separator!!>
+Answer: 10
+10 prisoners must sample the wine. Bonus points if you worked out a way to ensure than no more than 8 prisoners die.
+
+Number all bottles using binary digits. Assign each prisoner to one of the binary flags. Prisoners must take a sip from each bottle where their binary flag is set.
+
+Here is how you would find one poisoned bottle out of eight total bottles of wine.
+
+            1   2   3   4   5   6   7   8
+Prisoner A      X       X       X       X
+Prisoner B          X   X           X   X
+Prisoner C                  X   X   X   X
+
+In the above example, if all prisoners die, bottle 8 is bad. If none die, bottle 1 is bad. If A & B dies, bottle 4 is bad.
+
+With ten people there are 1024 unique combinations so you could test up to 1024 bottles of wine.
+
+Each of the ten prisoners will take a small sip from about 500 bottles. Each sip should take no longer than 15 seconds and should be a very small amount. Small sips not only leave more wine for guests. Small sips also avoid death by alcohol poisoning. As long as each prisoner is administered about a millilitre from each bottle, they will only consume the equivalent of about one bottle of wine each.
+
+Each prisoner will have at least a fifty percent chance of living. There is only one binary combination where all prisoners must sip from the wine. If there are ten prisoners then there are ten more combinations where all but one prisoner must sip from the wine. By avoiding these two types of combinations you can ensure no more than 8 prisoners die.

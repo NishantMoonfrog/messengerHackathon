@@ -209,7 +209,7 @@ public class CabSolveActivity extends CategoryWordSolveActivity {
                             String metadata = "";
                             try {
                                 JSONObject metadataJson = new JSONObject();
-                                metadataJson.put("word", Globals.encrypt(final_word));
+                                metadataJson.put("challenge", Globals.encrypt(final_word));
                                 metadataJson.put("name", challengerName);
                                 metadataJson.put("type", "caf");
                                 metadata = metadataJson.toString();

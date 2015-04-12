@@ -33,6 +33,28 @@ public class CabChallengeActivity extends CategoryWordChallengeActivity {
         };
         challenge_fragment_class = CabChallengeFragment.class;
         super.onCreate(savedInstanceState);
+
+        shareChallenge = new Runnable() {
+            @Override
+            public void run() {
+                String metadata = "";
+                try {
+                    JSONObject metadataJson = new JSONObject();
+                    metadataJson.put("challenge", Globals.encrypt(selectedWord));
+                    metadataJson.put("name", Globals.name);
+                    metadataJson.put("type", "caf");
+                    metadataJson.put("nchar", selectedPosition + 4);
+                    metadata = metadataJson.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Uri contentUri = ((new Uri.Builder()).scheme("file").appendPath(Globals.gifPath)).build();
+                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/gif").setMetaData(metadata).build();
+
+                MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
+            }
+        };
     }
 
     @Override
@@ -67,25 +89,5 @@ public class CabChallengeActivity extends CategoryWordChallengeActivity {
                 }
         };
         return viewChanges;
-    }
-
-    @Override
-    protected void shareChallenge(String gifPath) {
-        String metadata = "";
-        try {
-            JSONObject metadataJson = new JSONObject();
-            metadataJson.put("word", Globals.encrypt(selectedWord));
-            metadataJson.put("name", Globals.name);
-            metadataJson.put("type", "caf");
-            metadataJson.put("nchar", selectedPosition + 4);
-            metadata = metadataJson.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Uri contentUri = ((new Uri.Builder()).scheme("file").appendPath(gifPath)).build();
-        ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/gif").setMetaData(metadata).build();
-
-        MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
     }
 }

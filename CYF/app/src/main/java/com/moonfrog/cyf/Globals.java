@@ -2,6 +2,8 @@ package com.moonfrog.cyf;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTask;
+import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTaskParams;
 import com.moonfrog.cyf.view.ViewUpdateCall;
 
 import org.json.JSONArray;
@@ -20,7 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.security.Key;
 import java.util.ArrayList;
 
@@ -31,6 +37,8 @@ public class Globals {
 
     private static String key = "nishant__srinath";
     public static String name = "";
+    public static String puzzleDirectory = "puzzles";
+    public static String gifPath = "/sdcard/cyfTemp/challenge.gif";
 
     public static JSONObject word_list;
 
@@ -179,4 +187,74 @@ public class Globals {
         }
         return sliderMenu;
     }
+
+    public static ArrayList<String> getFilesFromDir(Context context, String dirFrom) {
+        if( dirFrom.length() > 0 && dirFrom.charAt(dirFrom.length() - 1) == '/' ) {
+            dirFrom = dirFrom.substring(0, dirFrom.length() - 1);
+        }
+        Resources res = context.getResources(); //if you are in an activity
+        AssetManager am = res.getAssets();
+        ArrayList<String> puzzles = new ArrayList<>();
+        try {
+            String fileList[] = am.list(dirFrom);
+     
+            if (fileList != null) {
+                for ( int i = 0;i<fileList.length;i++) {
+                    puzzles.add(fileList[i]);
+                } 
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return puzzles;
+    }
+
+    public static String getDataFromFile(Context context, String filePath) {
+        Resources res = context.getResources(); //if you are in an activity
+        AssetManager am = res.getAssets();
+        String text = "";
+        try {
+            InputStream mInput = am.open(filePath);
+            int size = mInput.available();
+            byte[] buffer = new byte[size];
+            mInput.read(buffer);
+            mInput.close();
+
+            // byte buffer into a string
+            text = new String(buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
+    public static void challengeFriends(Context context, int[] challenge_layouts, ViewUpdateCall[] viewChanges, Runnable shareChallenge) {
+        final String path = "/sdcard/cyfTemp/";
+        File folder = new File(path);
+        if (!folder.exists()) {
+            if( !folder.mkdirs() ) {
+                Log.e("Couldn't create folder ", path);
+                return;
+            }
+        }
+
+        final ArrayList< Bitmap > bitmaps = new ArrayList<>();
+        for(int i = 0 ; i < challenge_layouts.length ; i++) {
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View v = layoutInflater.inflate(challenge_layouts[i], null);
+            viewChanges[i].updateView(v);
+            if (v.getMeasuredHeight() <= 0) {
+                v.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            }
+            Bitmap image = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(image);
+            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+            v.draw(c);
+            bitmaps.add(image);
+        }
+        
+        GenerateGifFromBitmapsAsyncTask generateGifFromBitmapsAsyncTask = new GenerateGifFromBitmapsAsyncTask();
+        generateGifFromBitmapsAsyncTask.execute(new GenerateGifFromBitmapsAsyncTaskParams(bitmaps, gifPath, shareChallenge));
+    }
+
 }

@@ -164,7 +164,7 @@ public class CategoryWordChallengeFragment extends Fragment {
                         permissions.add("public_profile");
                         LoginManager.getInstance().logInWithReadPermissions(currentActivity, permissions);
                     } else {
-                        currentActivity.challengeFriends();
+                        Globals.challengeFriends(currentActivity.getBaseContext(), currentActivity.challenge_layouts, currentActivity.getViewChanges(), currentActivity.shareChallenge);
                     }
                 }
             });

@@ -1,0 +1,25 @@
+A 120 wire cable has been laid firmly underground between two telephone exchanges located 10km apart.
+
+Unfortunately after the cable was laid it was discovered to be the wrong type, the problem is the individual wires are not labeled. There is no visual way of knowing which wire is which and thus connections at either end is not immediately possible.
+
+You are a trainee technician and your boss has asked you to identify and label the wires at both ends without ripping it all up. You have no transport and only a battery and light bulb to test continuity. You do have tape and pen for labeling the wires.
+
+What is the shortest distance in kilometers you will need to walk to correctly identify and label each wire?
+<!!Separator!!>
+20
+<!!Separator!!>
+Answer: 20
+At one end label a wire "A". Then join two wire and label them both "B', then tie three (not already joined) wires together and call them each "C"....continue until all the wires are joined together in groups of 1, 2, 3, 4, 5, etc....for a 120 strand cable. NOTES that the largest group will have 15 wires.
+
+Now walk to the other end.
+
+Using a (battery and light bulb) it is now possible, for example, to find the wire that wasn't joined to any of the others. It is similarly possible to find which wires are in a pair, which is joined in a group of 3, etc. Each time a group is found the technician should label it with the letter for the group, so the single wire is labeled 'a', the pair are each labeled "A", etc....this now matches the other end.....the letters will go up to "O". Now take "A", "B", up to "O" and join them together in a group and label each one with "15", so we have cable "A15", "B15', "C15", up to "O15". Take the second and last "B'"wire and 
+join it with a remaining "C", "D", up to "O" and label these each "14' so we have "B14", "C14", up to "O14". Repeat this until at the end there will be a single "O" cabled labeled "O1".
+
+Now walk to the other end.
+
+Now untie all the old connections and identify the group labeled "1", "2", "3" ..."15" at which point each wire at each end has a unique classification.
+
+Alternative solution from citrog:
+
+First, tie the 120 wires together randomly in 60 pairs. Next, go to the far end, randomly label any wire 1, and connect the battery to it. Test which other wire is tied to it at the starting end, and label that wire 2. Then pick another wire other than 1 or 2, label it 3, and tie it to 2, so now the battery is connected to 1, which is tied to 2 at the other end, which is tied to 3 at the end you're at. Now test which wire is tied to 3 at the other end, and label that 4, etc. What you will wind up with is all 120 wires tied to each other in a continuous sequence. Then go back to the end you started at, leaving the battery behind, connected to wire 1. Before you untie all the wires at the starting point, label each wire so that you know which wire was paired with which. Now with all the wires untied at the starting point, test which wire is connected to the battery, and label that 1. Whichever wire was in the same pair as 1, label that 2, and then tie 1 and 2 back together. Now you can find 3, because it's tied to 2 on the far end. Once you find 3, label the wire it was tied to 4, etc. This assumes that the resistance of the wire is small enough that the battery will still light the bulb across 12,000 km of wire.

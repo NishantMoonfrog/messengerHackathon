@@ -1,0 +1,24 @@
+A stark raving mad king tells his 100 wisest men he is about to line them up and that he will place either a red or blue hat on each of their heads. Once lined up, they must not communicate amongst themselves. Nor may they attempt to look behind them or remove their own hat.
+
+The king tells the wise men that they will be able to see all the hats in front of them. They will not be able to see the color of their own hat or the hats behind them, although they will be able to hear the answers from all those behind them.
+
+The king will then start with the wise man in the back and ask "what color is your hat?" The wise man will only be allowed to answer "red" or "blue," nothing more. If the answer is incorrect then the wise man will be silently killed. If the answer is correct then the wise man may live but must remain absolutely silent.
+
+The king will then move on to the next wise man and repeat the question.
+
+The king makes it clear that if anyone breaks the rules then all the wise men will die, then allows the wise men to consult before lining them up. The king listens in while the wise men consult each other to make sure they don't devise a plan to cheat. To communicate anything more than their guess of red or blue by coughing or shuffling would be breaking the rules.
+
+What is the maximum number of men they can be guaranteed to save?
+<!!Separator!!>
+99
+<!!Separator!!>
+Answer: 99
+You can save about 50% by having everyone guess randomly.
+
+You can save 50% or more if every even person agrees to call out the color of the hat in front of them. That way the person in front knows what color their hat is, and if the person behind also has the same colored hat then both will survive.
+
+So how can 99 people be saved? The first wise man counts all the red hats he can see (Q) and then answers "blue" if the number is odd or "red" if the number is even. Each subsequent wise man keeps track of the number of red hats known to have been saved from behind (X), and counts the number of red hats in front (Y).
+
+If Q was even, and if X&Y are either both even or are both odd, then the wise man would answer blue. Otherwise the wise man would answer red.
+
+If Q was odd, and if X&Y are either both even or are both odd, then the wise man would answer red. Otherwise the wise man would answer blue.

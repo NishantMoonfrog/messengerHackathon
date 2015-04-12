@@ -52,7 +52,7 @@ abstract public class CategoryWordSolveActivity extends Activity {
         setContentView(solve_layout);
 
         challengerName = getIntent().getExtras().getString("challengerName", "");
-        final_word = getIntent().getExtras().getString("final_word", "");
+        final_word = getIntent().getExtras().getString("challenge", "");
 
         if(current_status.equals("")) {
             current_status = final_word.replaceAll("[A-Z]", "_");

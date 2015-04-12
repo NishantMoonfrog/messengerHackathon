@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.moonfrog.cyf.cab.CabChallengeActivity;
 import com.moonfrog.cyf.hangman.HangmanChallengeActivity;
 import com.moonfrog.cyf.view.ListAdapter;
+import com.moonfrog.cyf.puzzles.PuzzlesActivity;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class ChallengeChooseActivity extends Activity {
     String[][] modes_icons = {
         {"Hangman", "hangman"},
         {"Cows & Bulls", "cowsandbulls"},
-        {"Trivia", "trivia"},
+        {"Puzzles", "trivia"},
         {"Spot Me!", "spotme"},
         {"Coming Soon!", ""}
     };
@@ -58,6 +59,9 @@ public class ChallengeChooseActivity extends Activity {
                         break;
                     case 1:
                         intent = new Intent(ChallengeChooseActivity.this,  CabChallengeActivity.class);
+                        break;
+                    case 2:
+                        intent = new Intent(ChallengeChooseActivity.this, PuzzlesActivity.class);
                         break;
                     default:
                         break;

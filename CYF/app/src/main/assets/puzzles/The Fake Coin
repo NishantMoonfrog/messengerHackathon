@@ -1,0 +1,36 @@
+You have twelve coins. You know that one is fake. The only thing that distinguishes the fake coin from the real coins is that its weight is imperceptibly different. You have a perfectly balanced scale. The scale only tells you which side weighs more than the other side.
+
+What is the smallest number of times you must use the scale in order to always find the fake coin?
+
+Use only the twelve coins themselves and no others, no other weights, no cutting coins, no pencil marks on the scale. etc.
+
+These are modern coins, so the fake coin is not necessarily lighter.
+
+Presume the worst case scenario, and don't hope that you will pick the right coin on the first attempt.
+<!!Separator!!>
+3
+<!!Separator!!>
+Answer: 3
+If you knew the fake coin was lighter, then the solution would have an easy explanation. But you do not. So....
+
+Number the coins 1 through 12.
+
+1. Weigh coins 1,2,3,4 against coins 5,6,7,8.
+
+1.1. If they balance, then weigh coins 9 and 10 against coins 11 and 8 (we know from the first weighing that 8 is a good coin).
+
+1.1.1. If the second weighing also balances, we know coin 12 (the only one not yet weighed) is the counterfeit. The third weighing indicates whether it is heavy or light. 
+
+1.1.2. If (at the second weighing) coins 11 and 8 are heavier than coins 9 and 10, either 11 is heavy or 9 is light or 10 is light. Weigh 9 against 10. If they balance, 11 is heavy. If they don't balance, you know that either 9 or 10 is light, so the top coin is the fake.
+
+1.1.3 If (at the second weighing) coins 11 and 8 are lighter than coins 9 and 10, either 11 is light or 9 is heavy or 10 is heavy. Weigh 9 against 10. If they balance, 11 is light. If they don't balance, you know that either 9 or 10 is heavy, so the bottom coin is the fake. 
+
+1.2. Now if (at first weighing) the side with coins 5,6,7,8 are heavier than the side with coins 1,2,3,4. This means that either 1,2,3,4 is light or 5,6,7,8 is heavy. Weigh 1,2, and 5 against 3,6, and 9.
+
+1.2.1. If (when we weigh 1,2, and 5 against 3,6 and 9) they balance, it means that either 7 or 8 is heavy or 4 is light. By weighing 7 and 8 we obtain the answer, because if they balance, then 4 has to be light. If 7 and 8 do not balance, then the heavier coin is the counterfeit. 
+
+1.2.2. If (when we weigh 1,2, and 5 against 3,6 and 9) the right side is heavier, then either 6 is heavy or 1 is light or 2 is light. By weighing 1 against 2 the solution is obtained.
+
+1.2.3. If (when we weigh 1,2, and 5 against 3, 6 and 9) the right side is lighter, then either 3 is light or 5 is heavy. By weighing 3 against a good coin the solution is easily arrived at.
+
+1.3 If (at the first weighing) coins 1,2,3,4 are heavier than coins 5,6,7,8 then repeat the previous steps 1.2 through 1.2.3 but switch the numbers of coins 1,2,3,4 with 5,6,7,8.
