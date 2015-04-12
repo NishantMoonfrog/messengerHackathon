@@ -59,53 +59,56 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_word_challenge);
         static_instance = this;
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
 
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.e("facebook", "Logged In");
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
-                                        String name = null;
-                                        try {
-                                            JSONObject jsonObj = response.getJSONObject();
-                                            name = jsonObj.get("name").toString();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
+        if( Globals.name == "" ) {
+            FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+            callbackManager = CallbackManager.Factory.create();
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            Log.e("facebook", "Logged In");
+                            GraphRequest request = GraphRequest.newMeRequest(
+                                    loginResult.getAccessToken(),
+                                    new GraphRequest.GraphJSONObjectCallback() {
+                                        @Override
+                                        public void onCompleted(JSONObject object, GraphResponse response) {
+                                            String name = null;
+                                            try {
+                                                JSONObject jsonObj = response.getJSONObject();
+                                                name = jsonObj.get("name").toString();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            if( name == null) {
+                                                Log.e("facebook", "couldn't fetch graph object");
+                                                return;
+                                            }
+                                            name = name.split(" ")[0];
+
+                                            Globals.name = name;
+                                            Globals.challengeFriends(getBaseContext(), challenge_layouts, getViewChanges(), shareChallenge);
                                         }
-                                        if( name == null) {
-                                            Log.e("facebook", "couldn't fetch graph object");
-                                            return;
-                                        }
-                                        name = name.split(" ")[0];
+                                    });
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "id,name,link");
+                            request.setParameters(parameters);
+                            request.executeAsync();
 
-                                        Globals.name = name;
-                                        Globals.challengeFriends(getBaseContext(), challenge_layouts, getViewChanges(), shareChallenge);
-                                    }
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,link");
-                        request.setParameters(parameters);
-                        request.executeAsync();
+                        }
 
-                    }
+                        @Override
+                        public void onCancel() {
+                            Log.e("facebooK", "login cancelled");
+                        }
 
-                    @Override
-                    public void onCancel() {
-                        Log.e("facebooK", "login cancelled");
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Log.e("error while login", exception.toString());
-                    }
-                });
+                        @Override
+                        public void onError(FacebookException exception) {
+                            Log.e("error while login", exception.toString());
+                        }
+                    });
+        }
 
         if (savedInstanceState == null) {
             if(challenge_fragment_class == null) {
