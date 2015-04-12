@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.ChallengeChooseActivity;
@@ -30,6 +39,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -38,6 +48,7 @@ import java.util.Arrays;
 public class PuzzleSolveActivity extends Activity {
     public static PuzzleSolveActivity static_instance = null;
     public static String puzzleName;
+    private CallbackManager callbackManager = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         static_instance = this;
@@ -89,6 +100,57 @@ public class PuzzleSolveActivity extends Activity {
             }
         };
 
+        if( Globals.name == "" ) {
+            FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+            callbackManager = CallbackManager.Factory.create();
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            Log.e("facebook", "Logged In");
+                            GraphRequest request = GraphRequest.newMeRequest(
+                                    loginResult.getAccessToken(),
+                                    new GraphRequest.GraphJSONObjectCallback() {
+                                        @Override
+                                        public void onCompleted(JSONObject object, GraphResponse response) {
+                                            String name = null;
+                                            try {
+                                                JSONObject jsonObj = response.getJSONObject();
+                                                name = jsonObj.get("name").toString();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            if( name == null) {
+                                                Log.e("facebook", "couldn't fetch graph object");
+                                                return;
+                                            }
+                                            name = name.split(" ")[0];
+
+                                            Globals.name = name;
+                                            Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
+                                        }
+                                    });
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "id,name,link");
+                            request.setParameters(parameters);
+                            request.executeAsync();
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            Log.e("facebooK", "login cancelled");
+                        }
+
+                        @Override
+                        public void onError(FacebookException exception) {
+                            Log.e("error while login", exception.toString());
+                        }
+                    });
+        }
+
+
         if( type.equals("puzzle_challenge") ) {
             final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
             current.removeView(findViewById(R.id.puzzle_guess));
@@ -98,10 +160,22 @@ public class PuzzleSolveActivity extends Activity {
             challengeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
+                    if( Globals.name == "" ) {
+                        ArrayList<String> permissions = new ArrayList<>();
+                        permissions.add("public_profile");
+                        LoginManager.getInstance().logInWithReadPermissions(static_instance, permissions);
+                    } else {
+                        Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
+                    }
                 }
             });
         }
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     protected ViewUpdateCall[] getViewChanges() {
