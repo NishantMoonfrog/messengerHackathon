@@ -56,7 +56,11 @@
             android:label="@string/choose_puzzle" >
         </activity>
         <activity
-            android:name=".puzzles.PuzzleSolveActivity"
+            android:name=".puzzles.PuzzlesChallengeActivity"
+            android:label="@string/puzzle_confirm" >
+        </activity>
+        <activity
+            android:name=".puzzles.PuzzlesSolveActivity"
             android:label="@string/hangman_solve_title" >
         </activity>
         <activity android:name="com.facebook.FacebookActivity"

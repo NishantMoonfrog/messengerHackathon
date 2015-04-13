@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/solve_layout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ff5591e9">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/puzzle_question_layout"
+            android:layout_weight="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name of Puzzle"
+                android:id="@+id/puzzle_question_title"
+                android:layout_weight="0.05"
+                android:textStyle="bold"
+                android:textColor="#ff255989"
+                android:textSize="22dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView"
+                android:layout_weight="0.95" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/puzzle_text"
+                    android:editable="true"
+                    android:clickable="true"
+                    android:layout_weight="0.95"
+                    android:textColor="#ff5f656e" />
+            </ScrollView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/puzzle_explanation_layout"
+            android:layout_weight="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Explanation"
+                android:id="@+id/puzzle_explanation_title"
+                android:layout_weight="0.05"
+                android:textStyle="bold"
+                android:textColor="#ff255989"
+                android:textSize="22dp"
+                android:textIsSelectable="false" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView2"
+                android:layout_weight="0.95" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/explaination"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.95"
+                    android:textColor="#ff5f656e" />
+            </ScrollView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Answer: 3"
+            android:id="@+id/puzzle_answer"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            android:textColorHighlight="#ff255989"
+            android:textSize="22dp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Challenge"
+            android:id="@+id/guess_button"
+            android:layout_weight="1"
+            android:textSize="36dp"
+            android:background="#ff86ff70"
+            android:layout_margin="7dp"
+            android:onClick="onChallengeClicked" />
+
+    </LinearLayout>
+
+</LinearLayout>

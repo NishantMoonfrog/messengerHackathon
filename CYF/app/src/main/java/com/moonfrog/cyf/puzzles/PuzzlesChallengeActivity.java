@@ -1,20 +1,13 @@
-package com.moonfrog.cyf.view;
+package com.moonfrog.cyf.puzzles;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -24,43 +17,50 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.messenger.MessengerUtils;
-import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
-import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTask;
-import com.moonfrog.cyf.utils.GenerateGifFromBitmapsAsyncTaskParams;
+import com.moonfrog.cyf.view.ViewUpdateCall;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
- * Created by srinath on 30/03/15.
+ * Created by srinath on 13/04/15.
  */
-abstract public class CategoryWordChallengeActivity extends FragmentActivity {
-    public static CategoryWordChallengeActivity static_instance = null;
-    public static String selectedWord = "";
-    public static String selectedTopic = "";
-    public static int selectedPosition = 0;
+public class PuzzlesChallengeActivity extends Activity {
+    public static PuzzlesChallengeActivity static_instance = null;
 
-    protected Class<? extends Fragment> challenge_fragment_class = null;
+    private String puzzle_name;
 
-    protected int challenge_layouts[] = {
-            R.layout.challenge_hangman_gif_3
+    protected int[] challenge_layouts = new int[] {
+        R.layout.challenge_hangman_gif_1,
+        R.layout.challenge_cab_gif_2,
+        R.layout.challenge_hangman_gif_3
     };
-
-    private CallbackManager callbackManager = null;
 
     protected Runnable shareChallenge;
 
-    @Override
+    private CallbackManager callbackManager = null;
+
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.category_word_challenge);
         static_instance = this;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.puzzle_challenge);
+
+        puzzle_name = getIntent().getExtras().getString("challenge", "");
+
+        String[] puzzleText = Globals.getDataFromFile(getBaseContext(), Globals.puzzleDirectory + '/' + puzzle_name).split("<!!Separator!!>\n");
+        if( puzzleText.length < 3 ) {
+            throw new IllegalArgumentException("The File " + puzzle_name + " should have at question, answer and explanation separated by <!!Separator!!>");
+        }
+
+        ((TextView) findViewById(R.id.puzzle_question_title)).setText(puzzle_name);
+        ((TextView) findViewById(R.id.puzzle_text)).setText(puzzleText[0]);
+        ((TextView) findViewById(R.id.explaination)).setText(puzzleText[2]);
+        ((TextView) findViewById(R.id.puzzle_answer)).setText("Answer: " + puzzleText[1]);
+
+
 
         if( Globals.name == "" ) {
             FacebookSdk.sdkInitialize(this.getApplicationContext());
@@ -90,7 +90,7 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
                                             name = name.split(" ")[0];
 
                                             Globals.name = name;
-                                            Globals.challengeFriends(getBaseContext(), challenge_layouts, getViewChanges(), shareChallenge);
+                                            Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
                                         }
                                     });
                             Bundle parameters = new Bundle();
@@ -111,22 +111,15 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
                         }
                     });
         }
+    }
 
-        if (savedInstanceState == null) {
-            if(challenge_fragment_class == null) {
-                challenge_fragment_class = CategoryWordChallengeFragment.class;
-            }
-            Fragment fragment = null;
-            try {
-                fragment = challenge_fragment_class.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
+    public void onChallengeClicked(View v) {
+        if( Globals.name == "" ) {
+            ArrayList<String> permissions = new ArrayList<>();
+            permissions.add("public_profile");
+            LoginManager.getInstance().logInWithReadPermissions(static_instance, permissions);
+        } else {
+            Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
         }
     }
 
@@ -140,7 +133,24 @@ abstract public class CategoryWordChallengeActivity extends FragmentActivity {
         ViewUpdateCall[] viewChanges = {
                 new ViewUpdateCall() {
                     @Override
-                    public void updateView(View v) {}
+                    public void updateView(View v) {
+                        TextView vTemp = (TextView) v.findViewById(R.id.name);
+                        vTemp.setText(Globals.name);
+                    }
+                },
+                new ViewUpdateCall() {
+                    @Override
+                    public void updateView(View v) {
+
+                    }
+                },
+                new ViewUpdateCall() {
+                    @Override
+                    public void updateView(View v) {
+                        TextView tv = (TextView) v.findViewById(R.id.questionText);
+                        String text = "Solve\n" + puzzle_name + "!";
+                        tv.setText(text);
+                    }
                 }
         };
         return viewChanges;

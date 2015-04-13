@@ -1,19 +1,13 @@
 package com.moonfrog.cyf.puzzles;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -26,27 +20,19 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
-import com.moonfrog.cyf.ChallengeChooseActivity;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
-import com.moonfrog.cyf.main;
-import com.moonfrog.cyf.view.CategoryWordSolveActivity;
-import com.moonfrog.cyf.view.GenericPopup;
-import com.moonfrog.cyf.view.LetterSpacingTextView;
 import com.moonfrog.cyf.view.ViewUpdateCall;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by srinath on 31/03/15.
  */
-public class PuzzleSolveActivity extends Activity {
-    public static PuzzleSolveActivity static_instance = null;
+public class PuzzlesSolveActivity extends Activity {
+    public static PuzzlesSolveActivity static_instance = null;
     public static String puzzleName;
     private CallbackManager callbackManager = null;
     @Override
@@ -155,7 +141,7 @@ public class PuzzleSolveActivity extends Activity {
             final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
             current.removeView(findViewById(R.id.puzzle_guess));
 
-            Button challengeButton = (Button) findViewById(R.id.button_section).findViewById(R.id.guess_button);
+            Button challengeButton = (Button) findViewById(R.id.guess_section).findViewById(R.id.guess_button);
             challengeButton.setText("Challenge");
             challengeButton.setOnClickListener(new View.OnClickListener() {
                 @Override

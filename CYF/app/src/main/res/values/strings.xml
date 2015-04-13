@@ -2,6 +2,9 @@
     <string name="app_name">Challenge Your Friends!</string>
     <string name="choose_challenge">Challenge Type</string>
     <string name="choose_puzzle">Choose Puzzle</string>
+
+    <string name="puzzle_confirm">Puzzle</string>
+
     <string name="hangman_challenge">Choose Word</string>
 
     <string name="hangman_search_hint">Type Word</string>

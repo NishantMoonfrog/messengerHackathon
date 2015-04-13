@@ -2,13 +2,9 @@ package com.moonfrog.cyf;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,24 +14,16 @@ import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.cab.CabSolveActivity;
 import com.moonfrog.cyf.hangman.HangmanSolveActivity;
-import com.moonfrog.cyf.puzzles.PuzzleSolveActivity;
+import com.moonfrog.cyf.puzzles.PuzzlesSolveActivity;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -137,7 +125,7 @@ public class main extends Activity {
                         } else if ( type.equals("hangman") ) {
                             targetIntent = new Intent(main.this, HangmanSolveActivity.class);
                         } else {
-                            targetIntent = new Intent(main.this, PuzzleSolveActivity.class);
+                            targetIntent = new Intent(main.this, PuzzlesSolveActivity.class);
                         }
 
                         targetIntent.putExtras(params);
