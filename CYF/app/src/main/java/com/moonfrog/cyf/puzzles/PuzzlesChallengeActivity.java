@@ -2,6 +2,7 @@ package com.moonfrog.cyf.puzzles;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.messenger.MessengerUtils;
+import com.facebook.messenger.ShareToMessengerParams;
 import com.moonfrog.cyf.Globals;
 import com.moonfrog.cyf.R;
 import com.moonfrog.cyf.view.ViewUpdateCall;
@@ -60,6 +63,27 @@ public class PuzzlesChallengeActivity extends Activity {
         ((TextView) findViewById(R.id.explaination)).setText(puzzleText[2]);
         ((TextView) findViewById(R.id.puzzle_answer)).setText("Answer: " + puzzleText[1]);
 
+
+        shareChallenge = new Runnable() {
+            @Override
+            public void run() {
+                String metadata = "";
+                try {
+                    JSONObject metadataJson = new JSONObject();
+                    metadataJson.put("challenge", Globals.encrypt(puzzle_name));
+                    metadataJson.put("name", Globals.name);
+                    metadataJson.put("type", "puzzle_solve");
+                    metadata = metadataJson.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Uri contentUri = ((new Uri.Builder()).scheme("file").appendPath(Globals.gifPath)).build();
+                ShareToMessengerParams shareToMessengerParams = ShareToMessengerParams.newBuilder(contentUri, "image/gif").setMetaData(metadata).build();
+
+                MessengerUtils.shareToMessenger(static_instance, 10, shareToMessengerParams);
+            }
+        };
 
 
         if( Globals.name == "" ) {

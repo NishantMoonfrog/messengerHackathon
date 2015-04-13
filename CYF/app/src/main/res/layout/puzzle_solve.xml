@@ -7,46 +7,79 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:background="#ff5591e9">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/puzzle_text"
-            android:editable="true"
-            android:clickable="true" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_gravity="center_horizontal" />
-
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/guess_section">
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/puzzle_question_layout"
+            android:layout_weight="3">
 
             <TextView
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="New Text"
-                android:id="@+id/puzzle_guess" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name of Puzzle"
+                android:id="@+id/puzzle_question_title"
+                android:layout_weight="0.05"
+                android:textStyle="bold"
+                android:textColor="#ff255989"
+                android:textSize="22dp" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="Guess"
-                android:id="@+id/guess_button" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView"
+                android:layout_weight="0.95" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/puzzle_text"
+                    android:editable="true"
+                    android:clickable="true"
+                    android:layout_weight="0.95"
+                    android:textColor="#ff5f656e" />
+            </ScrollView>
+
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/explaination"
-            android:layout_gravity="center_horizontal" />
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Answer"
+            android:id="@+id/puzzle_answer"
+            android:layout_weight="0.3"
+            android:textStyle="bold"
+            android:textColorHighlight="#ff255989"
+            android:textSize="22dp"
+            android:gravity="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/editText"
+            android:layout_weight="0.5"
+            android:text="???" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Guess"
+            android:id="@+id/guess_button"
+            android:layout_weight="0.5"
+            android:textSize="36dp"
+            android:background="#ff86ff70"
+            android:layout_margin="7dp"
+            android:onClick="onChallengeClicked" />
 
     </LinearLayout>
 

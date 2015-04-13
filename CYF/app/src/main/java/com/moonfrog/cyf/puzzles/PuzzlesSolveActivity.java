@@ -41,8 +41,6 @@ public class PuzzlesSolveActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.puzzle_solve);
 
-
-        String type = getIntent().getExtras().getString("type", "");
         puzzleName = getIntent().getExtras().getString("challenge", "");
         setTitle(puzzleName);
 
@@ -134,27 +132,6 @@ public class PuzzlesSolveActivity extends Activity {
                             Log.e("error while login", exception.toString());
                         }
                     });
-        }
-
-
-        if( type.equals("puzzle_challenge") ) {
-            final ViewGroup current = (ViewGroup) static_instance.getWindow().getDecorView().getRootView();
-            current.removeView(findViewById(R.id.puzzle_guess));
-
-            Button challengeButton = (Button) findViewById(R.id.guess_section).findViewById(R.id.guess_button);
-            challengeButton.setText("Challenge");
-            challengeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if( Globals.name == "" ) {
-                        ArrayList<String> permissions = new ArrayList<>();
-                        permissions.add("public_profile");
-                        LoginManager.getInstance().logInWithReadPermissions(static_instance, permissions);
-                    } else {
-                        Globals.challengeFriends(static_instance.getBaseContext(), challenge_layouts, static_instance.getViewChanges(), shareChallenge);
-                    }
-                }
-            });
         }
     }
 
