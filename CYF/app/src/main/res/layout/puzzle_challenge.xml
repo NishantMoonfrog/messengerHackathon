@@ -112,7 +112,7 @@
             android:textSize="36dp"
             android:background="#ff86ff70"
             android:layout_margin="7dp"
-            android:onClick="onChallengeClicked" />
+            android:onClick="onGuessClicked" />
 
     </LinearLayout>
 

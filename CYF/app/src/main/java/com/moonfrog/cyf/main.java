@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.apsalar.sdk.Apsalar;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
@@ -27,6 +28,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class main extends Activity {
 
@@ -42,6 +44,18 @@ public class main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading);
         static_instance = this;
+
+        Intent i = new Intent("com.android.vending.INSTALL_REFERRER");
+        i.setPackage("com.teen.patt.cyf");
+        //i.putExtra("referrer", "utm_source%3Dtest_src%26utm_medium%3Dtest_mdm%26utm_term%3Dtest_term%26utm_content%3Dtest_cont%26utm_campaign%3Dtest_name");
+        sendBroadcast(i);
+        Runnable apsalar_init_task = new Runnable() {
+            public void run() {
+                Apsalar.startSession(static_instance, "Srinath", "kfQisOB7");
+            }
+        };
+        worker.schedule(apsalar_init_task, 2, TimeUnit.SECONDS);
+
 
         TextView tv = (TextView) findViewById(R.id.loading_text);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/brady.ttf");
@@ -151,6 +165,7 @@ public class main extends Activity {
     protected void onPause() {
         super.onPause();
         AppEventsLogger.deactivateApp(this);
+        Apsalar.unregisterApsalarReceiver();
     }
 
     public static void postToMessenger(ShareToMessengerParams shareToMessengerParams) {
